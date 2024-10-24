@@ -3,17 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package dental_clinic;
-import javax.swing.*;
-import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import dow.ConnectionProvider;
-import java.awt.event.KeyEvent;
-import javax.swing.JOptionPane;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.JOptionPane;
 public class dentalAdminPanel2 extends javax.swing.JFrame {
 
@@ -108,6 +103,11 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
         editBtn.setBorderPainted(false);
         editBtn.setContentAreaFilled(false);
         editBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(editBtn);
         editBtn.setBounds(960, 540, 120, 40);
 
@@ -187,8 +187,44 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
         String name = employeeName.getText();
         String ID = employeeID.getText();
         String password = employeePassword.getText();
-        String rerpassword = employeeRePassword.getText();
+        String repassword = employeeRePassword.getText();
         
+        
+        try (Connection con = ConnectionProvider.getCon()) {
+            String sql = "INSERT INTO employeeaccounts (employeeName, employeeUserName, employeePassword, employeeDate) VALUES (?,?, ?, CURDATE())";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, name);
+                ps.setString(2, ID);
+                ps.setString(3, password);
+                
+                if(!password.contains(repassword)){
+                    JOptionPane.showMessageDialog(null, "Passwords does not match");
+                    
+                }
+                else{
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "User added successfully.");
+                setVisible(false);
+                new dentalAdminPanel2().setVisible(true);
+                }
+            }
+        }catch (SQLIntegrityConstraintViolationException e){
+            JOptionPane.showMessageDialog(null,"User ID already exist.");
+            employeeName.setText("");
+            employeeID.setText("");
+            employeePassword.setText("");
+            employeeRePassword.setText("");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error saving user.", "Error", JOptionPane.ERROR_MESSAGE);
+            employeeName.setText("");
+            employeeID.setText("");
+            employeePassword.setText("");
+            employeeRePassword.setText("");
+            
+            
+        }
+        formComponentShown(null);
         
         
         
@@ -218,6 +254,22 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_formComponentShown
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        if (validateFields("new")){
+        JOptionPane.showMessageDialog(null, "Fields cannott be left blank.",null, JOptionPane.ERROR_MESSAGE);
+        return;
+        
+        }
+        String name = employeeName.getText();
+        String ID = employeeID.getText();
+        String password = employeePassword.getText();
+        String repassword = employeeRePassword.getText();
+        
+        
+        
+        
+    }//GEN-LAST:event_editBtnActionPerformed
 
     /**
      * @param args the command line arguments
