@@ -4,7 +4,13 @@
  */
 package dental_clinic;
 
+import dow.ConnectionProvider;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,7 +39,7 @@ public class guestLoginFrame extends javax.swing.JFrame {
         loginBtn = new javax.swing.JButton();
         signTxt = new javax.swing.JLabel();
         returnBtn = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        guestPassword = new javax.swing.JPasswordField();
         guestUsername = new javax.swing.JTextField();
         signupBtn = new javax.swing.JButton();
         guestLoginBG = new javax.swing.JLabel();
@@ -47,6 +53,11 @@ public class guestLoginFrame extends javax.swing.JFrame {
         loginBtn.setBorderPainted(false);
         loginBtn.setContentAreaFilled(false);
         loginBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        loginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(loginBtn);
         loginBtn.setBounds(780, 510, 170, 50);
 
@@ -61,10 +72,10 @@ public class guestLoginFrame extends javax.swing.JFrame {
         jPanel1.add(returnBtn);
         returnBtn.setBounds(40, 50, 70, 50);
 
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jPasswordField1.setBorder(null);
-        jPanel1.add(jPasswordField1);
-        jPasswordField1.setBounds(740, 420, 300, 30);
+        guestPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        guestPassword.setBorder(null);
+        jPanel1.add(guestPassword);
+        guestPassword.setBounds(740, 420, 300, 30);
 
         guestUsername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         guestUsername.setBorder(null);
@@ -114,6 +125,43 @@ public class guestLoginFrame extends javax.swing.JFrame {
         signupBtn.setForeground(Color.decode("#788bff"));
     }//GEN-LAST:event_signupBtnMouseExited
 
+    private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        String guestUser = guestUsername.getText();
+        String guestPass = guestPassword.getText();
+        
+        int temp = 0;
+        
+        try {
+            
+            Connection con = ConnectionProvider.getCon();
+            
+            if (con == null) {
+                JOptionPane.showMessageDialog(null, "Database connection failed.");
+                return;
+            }
+
+            Statement st = con.createStatement();
+
+            // First, check if the username already exists
+            ResultSet rsCheck = st.executeQuery("SELECT * FROM useraccounts WHERE userUserName='" + guestUser + "' and userPassword ='"+ guestPass +"'");
+            
+                 
+            if(guestUser.isEmpty() && guestPass.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Please enter Username and Password");
+            } else if (guestUser.isEmpty() || guestPass.isEmpty()){
+                JOptionPane.showMessageDialog(null, "Fields cannot be left blank.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (rsCheck.next()){
+                JOptionPane.showMessageDialog(null, "Login Successful!");
+                setVisible(false);
+                new dentalServicesFrame().setVisible(true);
+            }
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "SQL Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_loginBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -151,9 +199,9 @@ public class guestLoginFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel guestLoginBG;
+    private javax.swing.JPasswordField guestPassword;
     private javax.swing.JTextField guestUsername;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JButton loginBtn;
     private javax.swing.JButton returnBtn;
     private javax.swing.JLabel signTxt;
