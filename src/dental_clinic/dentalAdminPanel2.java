@@ -3,7 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package dental_clinic;
-
+import javax.swing.*;
+import java.awt.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import dow.ConnectionProvider;
+import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.JOptionPane;
 public class dentalAdminPanel2 extends javax.swing.JFrame {
 
@@ -40,6 +50,11 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(null);
@@ -129,6 +144,11 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\infoFrame (2).png")); // NOI18N
         jLabel1.setText("jLabel1");
+        jLabel1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jLabel1ComponentShown(evt);
+            }
+        });
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 1170, 710);
 
@@ -155,6 +175,25 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_addBtnActionPerformed
+
+    private void jLabel1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLabel1ComponentShown
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1ComponentShown
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        try{
+            Connection con = ConnectionProvider.getCon();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT *FROM employeeaccounts");
+            
+            DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+            model.setRowCount(0);
+            while(rs.next()){
+                model.addRow(new Object[]{rs.getString("employeeUserName"),rs.getString("employeeName"),rs.getString("employeePassword")});
+            }
+            
+        }
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
