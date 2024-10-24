@@ -24,6 +24,17 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
     }
+    
+    private boolean validateFields(String formType) {
+        if (formType.equals("edit") && !employeeName.getText().equals("") && !employeeID.getText().equals("") && !employeePassword.getText().equals("") && !employeeRePassword.getText().equals("")) {
+            return false;
+        } else if (formType.equals("new") && !employeeName.getText().equals("") && !employeeID.getText().equals("") && !employeePassword.getText().equals("") && !employeeRePassword.getText().equals("")) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -167,10 +178,17 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
     }//GEN-LAST:event_exitBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+    if (validateFields("new")){
+        JOptionPane.showMessageDialog(null, "Fields cannott be left blank.",null, JOptionPane.ERROR_MESSAGE);
+        return;
+        
+    }
+        
         String name = employeeName.getText();
         String ID = employeeID.getText();
         String password = employeePassword.getText();
         String rerpassword = employeeRePassword.getText();
+        
         
         
         
@@ -196,6 +214,9 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
         }catch(Exception e){
             e.printStackTrace();
         }
+        editBtn.setEnabled(false);
+        
+        
     }//GEN-LAST:event_formComponentShown
 
     /**
