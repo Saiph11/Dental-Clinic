@@ -77,7 +77,7 @@ public class employeeLoginFrame extends javax.swing.JFrame {
         jPanel1.add(returnBtn);
         returnBtn.setBounds(40, 50, 70, 50);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\infoFrame.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maggie\\Desktop\\ClearView Images\\employeeLogin.png")); // NOI18N
         jLabel1.setText("jLabel1");
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 1170, 710);
