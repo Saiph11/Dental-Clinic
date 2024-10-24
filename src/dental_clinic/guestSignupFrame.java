@@ -4,6 +4,13 @@
  */
 package dental_clinic;
 
+import java.sql.ResultSet;
+import java.sql.*;
+import dow.ConnectionProvider;
+import java.sql.Statement;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Maggie
@@ -65,6 +72,11 @@ public class guestSignupFrame extends javax.swing.JFrame {
         signupBtn.setBorderPainted(false);
         signupBtn.setContentAreaFilled(false);
         signupBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        signupBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signupBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(signupBtn);
         signupBtn.setBounds(790, 610, 160, 40);
 
@@ -82,6 +94,54 @@ public class guestSignupFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void signupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupBtnActionPerformed
+        String name = signupName.getText();
+        String userName = signupUsername.getText();
+        String password = signupPassword.getText();
+        String repassword = signupRePassword.getText();
+
+        try {
+            Connection con = ConnectionProvider.getCon();
+
+            // Check if connection is established
+            if (con == null) {
+                JOptionPane.showMessageDialog(null, "Database connection failed.");
+                return;
+            }
+
+            Statement st = con.createStatement();
+
+            // First, check if the username already exists
+            ResultSet rsCheck = st.executeQuery("SELECT * FROM useraccounts WHERE userUserName='" + userName + "'");
+
+            if (rsCheck.next()) {
+                // Username exists, show a message
+                JOptionPane.showMessageDialog(null, "Username is already taken. Please choose another one.");
+            } else {
+                // Check if any field is empty
+                if (name.isEmpty() ||  userName.isEmpty() || password.isEmpty() || repassword.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Please fill out all fields.");
+                } else if (!password.equals(repassword)) {
+                    JOptionPane.showMessageDialog(null, "Passwords do not match!");
+                } else {
+                    // Insert the new user into the database (leaving UserRoles, MobileNumber, and Email as NULL)
+                    int result = st.executeUpdate("INSERT INTO useraccounts (userFullName, userUserName, userPassword) VALUES ('" + name + "', '" + userName + "', '" + password + "')");
+                    if (result > 0) {
+                        JOptionPane.showMessageDialog(null, "Signed up successfully");
+                        setVisible(false);
+                        new guestLoginFrame().setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error signing up. Please try again.");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "SQL Error: " + e.getMessage());
+        }
+
+    
+    }//GEN-LAST:event_signupBtnActionPerformed
 
     /**
      * @param args the command line arguments
