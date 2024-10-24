@@ -188,10 +188,13 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
             
             DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
             model.setRowCount(0);
+            
             while(rs.next()){
-                model.addRow(new Object[]{rs.getString("employeeUserName"),rs.getString("employeeName"),rs.getString("employeePassword")});
+                model.addRow(new Object[]{rs.getString("employeeUserName"),rs.getString("employeeName"),rs.getString("employeePassword"), rs.getDate("EmployeeDate")});
             }
             
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }//GEN-LAST:event_formComponentShown
 
