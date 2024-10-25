@@ -141,7 +141,7 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Employee ID", "Employee Name", "Password"
+                "ID", "Employee Username", "Employee Name", "Password"
             }
         ) {
             boolean[] canEdit = new boolean [] {
