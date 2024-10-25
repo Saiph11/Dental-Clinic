@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package dental_clinic;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.*;
 import java.util.logging.Level;
@@ -15,7 +13,7 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
 
   public void Connect() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dental", "root", "padabaKO21");
             System.out.println("Connected!");
         } catch (ClassNotFoundException ex) {
@@ -163,7 +161,7 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Employee Username", "Employee Name", "Password"
+                "ID", "Employee ID", "Employee Name", "Password"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -300,24 +298,28 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         
-        int selectedRow = jTable1.getSelectedRow();
+                               
+    int selectedRow = jTable1.getSelectedRow();
 
-            // Get values from the selected row based on column index
-            String employeeIDValue = jTable1.getValueAt(selectedRow, 0).toString();
-            String employeeNameValue = jTable1.getValueAt(selectedRow, 1).toString();
-            String employeePasswordValue = jTable1.getValueAt(selectedRow, 2).toString();
+    // Get values from the selected row based on column index
+    String employeeIDValue = jTable1.getValueAt(selectedRow, 0).toString(); // employeeID
+    String employeeUsernameValue = jTable1.getValueAt(selectedRow, 1).toString(); // employeeUserName
+    String employeeNameValue = jTable1.getValueAt(selectedRow, 2).toString(); // employeeName
+    String employeePasswordValue = jTable1.getValueAt(selectedRow, 3).toString(); // employeePassword
 
-            // Set the values in the respective text fields
-            employeeUsername.setText(employeeIDValue);
-            employeeName.setText(employeeNameValue);
-            employeePassword.setText(employeePasswordValue);
-            
-            employeeUsername.setEnabled(false);
-            employeeName.setEnabled(false);
-            employeePassword.setEnabled(false);
-            employeeRePassword.setEnabled(false);
-            
-            clearBtn.setEnabled(true);
+    // Set the values in the respective text fields
+    employeeUsername.setText(employeeUsernameValue); // Use username here
+    employeeName.setText(employeeNameValue);
+    employeePassword.setText(employeePasswordValue);
+
+    employeeUsername.setEnabled(false); // Set appropriate fields to disabled if needed
+    employeeName.setEnabled(false);
+    employeePassword.setEnabled(false);
+    employeeRePassword.setEnabled(false);
+
+    clearBtn.setEnabled(true);
+
+
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
@@ -333,41 +335,123 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
+                                                                       
+    String name = employeeName.getText().trim();
+    String ID = employeeUsername.getText().trim();
+    String password = employeePassword.getText().trim();
+
+    try {
+        // Prepare SELECT query to locate the employee by their username, name, and password
+        pst = con.prepareStatement("SELECT * FROM employeeaccounts WHERE employeeUserName = ? AND employeeName = ? AND employeePassword = ?");
         
-         String name = employeeName.getText();
-         String ID = employeeUsername.getText();
-         String password = employeePassword.getText();
-         String repassword = employeeRePassword.getText();
-         
-          try{
-            
-             pst = con.prepareStatement("DELETE FROM employeeaccounts WHERE employeeUserName = ? AND employeeName = ? AND employeePassword = ?");
-            
-                
-                pst.setString(1, ID);
-                pst.setString(2, name);
-                pst.setString(3, password);
-                
-                int rowsDeleted = pst.executeUpdate();
+        // Set parameters for the SELECT query
+        pst.setString(1, ID);
+        pst.setString(2, name);
+        pst.setString(3, password);
         
-                if (rowsDeleted > 0) {
-                    JOptionPane.showMessageDialog(null, "Removed Successfully.");
-                } else {
-                    JOptionPane.showMessageDialog(null, "No matching record found.");
-                }
-          }
-          catch(SQLException e){
-              e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error occurred while trying to remove the record.");
-          }
-         
+        ResultSet rs = pst.executeQuery();
+        
+        if (rs.next()) {
+            // Retrieve the employeeID from the ResultSet
+            int employeeID = rs.getInt("employeeID"); // This retrieves the employeeID correctly
+
+            // Prepare the DELETE query to remove the row using employeeID
+            pst = con.prepareStatement("DELETE FROM employeeaccounts WHERE employeeID = ?");
+            
+            // Set the employeeID parameter for the DELETE query
+            pst.setInt(1, employeeID);
+            
+            // Execute the DELETE query
+            int rowsDeleted = pst.executeUpdate();
+            
+            // Check if the row was successfully deleted
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(null, "Removed Successfully.");
+                
+                // Optionally refresh the GUI
+                setVisible(false);
+                new dentalAdminPanel2().setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "No matching record found.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No matching record found.");
+        }
+    } catch(SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error occurred while trying to remove the record.");
+    } finally {
+        try {
+            if (pst != null) pst.close();  // Close the PreparedStatement to release resources
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } 
+    }
+
+
+ 
     }//GEN-LAST:event_removeBtnActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Set the Nimbus look private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {                                          
+                              
+    String name = employeeName.getText().trim();
+    String ID = employeeUsername.getText().trim();
+    String password = employeePassword.getText().trim();
+
+    try {
+        // Prepare SELECT query to locate the employee by their username, name, and password
+        pst = con.prepareStatement("SELECT *FROM employeeaccounts WHERE employeeUserName = ? AND employeeName = ? AND employeePassword = ?");
+        
+        // Set parameters for the SELECT query
+        pst.setString(1, ID);
+        pst.setString(2, name);
+        pst.setString(3, password);
+        
+    
+        ResultSet rs = pst.executeQuery();
+        
+        if (rs.next()) {
+            // Retrieve the employeeID
+            int employeeID = rs.getInt("employeeID");
+
+            // Prepare the DELETE query to remove the row using employeeID
+            pst = con.prepareStatement("DELETE FROM employeeaccounts WHERE employeeID = ?");
+            
+            // Set the employeeID parameter for the DELETE query
+            pst.setInt(1, employeeID);
+            
+            // Execute the DELETE query
+            int rowsDeleted = pst.executeUpdate();
+            
+            // Check if the row was successfully deleted
+            if (rowsDeleted > 0) {
+                con.commit();  // Commit the transaction, if necessary
+                JOptionPane.showMessageDialog(null, "Removed Successfully.");
+                
+                // Optionally refresh the GUI
+                setVisible(false);
+                new dentalAdminPanel2().setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "No matching record found.");
+            }
+        }
+    } catch(SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error occurred while trying to remove the record.");
+    } finally {
+        try {
+            if (pst != null) pst.close();  // Close the PreparedStatement to release resources
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } 
+    
+}
+ 
+    }                                and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
