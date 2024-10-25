@@ -4,6 +4,15 @@
  */
 package dental_clinic;
 
+import dow.ConnectionProvider;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 /**
  *
  * @author Maggie
@@ -16,6 +25,10 @@ public class dentalServicesFrame extends javax.swing.JFrame {
     public dentalServicesFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
+        generalPanel.setVisible(false);
+        cosmeticPanel.setVisible(false);
+        orthodonticsPanel.setVisible(false);
+        oralPanel.setVisible(false);
     }
 
     /**
@@ -27,6 +40,9 @@ public class dentalServicesFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         nextBtn = new javax.swing.JButton();
         returnBtn = new javax.swing.JButton();
@@ -92,7 +108,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(generalBtn);
-        generalBtn.setBounds(170, 160, 460, 100);
+        generalBtn.setBounds(160, 160, 470, 100);
 
         orthodonticsBtn.setBorderPainted(false);
         orthodonticsBtn.setContentAreaFilled(false);
@@ -130,16 +146,19 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         oralPanel.setOpaque(false);
         oralPanel.setLayout(null);
 
+        buttonGroup1.add(oralCheckBox1);
         oralCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         oralCheckBox1.setText("Tooth Extraction");
         oralPanel.add(oralCheckBox1);
         oralCheckBox1.setBounds(30, 40, 190, 40);
 
+        buttonGroup1.add(oralCheckBox2);
         oralCheckBox2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         oralCheckBox2.setText("Dental Implants");
         oralPanel.add(oralCheckBox2);
         oralCheckBox2.setBounds(30, 120, 190, 40);
 
+        buttonGroup1.add(oralCheckBox3);
         oralCheckBox3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         oralCheckBox3.setText("Gum Graft Surgery");
         oralCheckBox3.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +169,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         oralPanel.add(oralCheckBox3);
         oralCheckBox3.setBounds(30, 200, 190, 40);
 
+        buttonGroup1.add(oralCheckBox4);
         oralCheckBox4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         oralCheckBox4.setText("Root Canal");
         oralPanel.add(oralCheckBox4);
@@ -169,7 +189,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         cosmeticCheckBox2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         cosmeticCheckBox2.setText("Dental Veneers");
         cosmeticPanel.add(cosmeticCheckBox2);
-        cosmeticCheckBox2.setBounds(30, 120, 180, 33);
+        cosmeticCheckBox2.setBounds(30, 120, 180, 29);
 
         cosmeticCheckBox3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         cosmeticCheckBox3.setText("Dental Bridges");
@@ -179,7 +199,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         cosmeticCheckBox4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         cosmeticCheckBox4.setText("Cosmetic Bonding");
         cosmeticPanel.add(cosmeticCheckBox4);
-        cosmeticCheckBox4.setBounds(30, 280, 200, 33);
+        cosmeticCheckBox4.setBounds(30, 280, 200, 29);
 
         jPanel1.add(cosmeticPanel);
         cosmeticPanel.setBounds(730, 220, 260, 340);
@@ -223,16 +243,19 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         orthodonticsPanel.setOpaque(false);
         orthodonticsPanel.setLayout(null);
 
+        buttonGroup2.add(orthodonticsCheckBox1);
         orthodonticsCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         orthodonticsCheckBox1.setText("Ceramic Braces");
         orthodonticsPanel.add(orthodonticsCheckBox1);
         orthodonticsCheckBox1.setBounds(30, 200, 190, 40);
 
+        buttonGroup2.add(orthodonticsCheckBox2);
         orthodonticsCheckBox2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         orthodonticsCheckBox2.setText("Invisalign");
         orthodonticsPanel.add(orthodonticsCheckBox2);
         orthodonticsCheckBox2.setBounds(30, 120, 180, 40);
 
+        buttonGroup2.add(orthodonticsCheckBox3);
         orthodonticsCheckBox3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         orthodonticsCheckBox3.setText("Traditonal Braces");
         orthodonticsPanel.add(orthodonticsCheckBox3);
@@ -241,7 +264,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         jPanel1.add(orthodonticsPanel);
         orthodonticsPanel.setBounds(730, 220, 260, 340);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maggie\\Desktop\\ClearView Images\\dentalServices.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\Homepage.png")); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 1180, 710);
 
@@ -251,7 +274,175 @@ public class dentalServicesFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
-        // TODO add your handling code here:
+        String gen = "General Dentistry";
+        String cos = "Cosmetic Dentistry";
+        String ortho = "Orthodontics";
+        String oral = "Oral Surgery";
+        
+        if (generalPanel.isVisible()) { // Ensure generalBtn is selected if needed
+        try (Connection con = ConnectionProvider.getCon();
+             Statement st = con.createStatement()) {
+
+            StringBuilder serviceCategoryValues = new StringBuilder();
+
+            // Gather selected checkboxes for general services
+            if (generalCheckBox1.isSelected()) {
+                serviceCategoryValues.append(generalCheckBox1.getText()).append(", ");
+            }
+            if (generalCheckBox2.isSelected()) {
+                serviceCategoryValues.append(generalCheckBox2.getText()).append(", ");
+            }
+            if (generalCheckBox3.isSelected()) {
+                serviceCategoryValues.append(generalCheckBox3.getText()).append(", ");
+            }
+            if (generalCheckBox4.isSelected()) {
+                serviceCategoryValues.append(generalCheckBox3.getText()).append(", ");
+            }
+
+            // Remove trailing comma and space
+            if (serviceCategoryValues.length() > 0) {
+                serviceCategoryValues.setLength(serviceCategoryValues.length() - 2);
+            }
+
+            // Insert data if any checkboxes are selected
+            if (serviceCategoryValues.length() > 0) {
+                String query = "INSERT INTO dental_services (ServiceCategory,ServiceType) VALUES ('" + gen + "', '" + serviceCategoryValues.toString() + "')";
+                st.executeUpdate(query);
+                JOptionPane.showMessageDialog(null, "Data inserted successfully!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select at least one service.");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "SQL Error: " + ex.getMessage());
+        }
+        
+        
+    } else if (cosmeticPanel.isVisible()) { // Ensure generalBtn is selected if needed
+        try (Connection con = ConnectionProvider.getCon();
+             Statement st = con.createStatement()) {
+
+            StringBuilder serviceCategoryValues = new StringBuilder();
+
+            // Gather selected checkboxes for general services
+            if (cosmeticCheckBox1.isSelected()) {
+                serviceCategoryValues.append(cosmeticCheckBox1.getText()).append(", ");
+            }
+            if (cosmeticCheckBox2.isSelected()) {
+                serviceCategoryValues.append(cosmeticCheckBox2.getText()).append(", ");
+            }
+            if (cosmeticCheckBox3.isSelected()) {
+                serviceCategoryValues.append(cosmeticCheckBox3.getText()).append(", ");
+            }
+            if (cosmeticCheckBox4.isSelected()) {
+                serviceCategoryValues.append(cosmeticCheckBox4.getText()).append(", ");
+            }
+
+            // Remove trailing comma and space
+            if (serviceCategoryValues.length() > 0) {
+                serviceCategoryValues.setLength(serviceCategoryValues.length() - 2);
+            }
+
+            // Insert data if any checkboxes are selected
+            if (serviceCategoryValues.length() > 0) {
+                String query = "INSERT INTO dental_services (ServiceCategory,ServiceType) VALUES ('" + cos + "', '" + serviceCategoryValues.toString() + "')";
+                st.executeUpdate(query);
+                JOptionPane.showMessageDialog(null, "Data inserted successfully!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select at least one service.");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "SQL Error: " + ex.getMessage());
+        }
+        
+        
+    }else if (orthodonticsPanel.isVisible()) { // Ensure generalBtn is selected if needed
+        try (Connection con = ConnectionProvider.getCon();
+             Statement st = con.createStatement()) {
+
+            StringBuilder serviceCategoryValues = new StringBuilder();
+
+            // Gather selected checkboxes for general services
+            if (orthodonticsCheckBox1.isSelected()) {
+                serviceCategoryValues.append(orthodonticsCheckBox1.getText()).append(", ");
+            }
+            if (orthodonticsCheckBox2.isSelected()) {
+                serviceCategoryValues.append(orthodonticsCheckBox2.getText()).append(", ");
+            }
+            if (orthodonticsCheckBox3.isSelected()) {
+                serviceCategoryValues.append(orthodonticsCheckBox3.getText()).append(", ");
+            }
+
+
+            // Remove trailing comma and space
+            if (serviceCategoryValues.length() > 0) {
+                serviceCategoryValues.setLength(serviceCategoryValues.length() - 2);
+            }
+
+            // Insert data if any checkboxes are selected
+            if (serviceCategoryValues.length() > 0) {
+                String query = "INSERT INTO dental_services (ServiceCategory,ServiceType) VALUES ('" + ortho + "', '" + serviceCategoryValues.toString() + "')";
+                st.executeUpdate(query);
+                JOptionPane.showMessageDialog(null, "Data inserted successfully!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select at least one service.");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "SQL Error: " + ex.getMessage());
+        }
+        
+        
+    }
+    else if (oralPanel.isVisible()) { // Ensure generalBtn is selected if needed
+        try (Connection con = ConnectionProvider.getCon();
+             Statement st = con.createStatement()) {
+
+            StringBuilder serviceCategoryValues = new StringBuilder();
+
+            // Gather selected checkboxes for general services
+            if (oralCheckBox1.isSelected()) {
+                serviceCategoryValues.append(oralCheckBox1.getText()).append(", ");
+            }
+            if (oralCheckBox2.isSelected()) {
+                serviceCategoryValues.append(oralCheckBox2.getText()).append(", ");
+            }
+            if (oralCheckBox3.isSelected()) {
+                serviceCategoryValues.append(oralCheckBox3.getText()).append(", ");
+            }
+            if (oralCheckBox3.isSelected()) {
+                serviceCategoryValues.append(oralCheckBox3.getText()).append(", ");
+            }
+
+
+            // Remove trailing comma and space
+            if (serviceCategoryValues.length() > 0) {
+                serviceCategoryValues.setLength(serviceCategoryValues.length() - 2);
+            }
+
+            // Insert data if any checkboxes are selected
+            if (serviceCategoryValues.length() > 0) {
+                String query = "INSERT INTO dental_services (ServiceCategory,ServiceType) VALUES ('" + oral + "', '" + serviceCategoryValues.toString() + "')";
+                st.executeUpdate(query);
+                JOptionPane.showMessageDialog(null, "Data inserted successfully!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select at least one service.");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "SQL Error: " + ex.getMessage());
+        }
+        
+        
+    }
+    else {
+        JOptionPane.showMessageDialog(null, "Please select a category.");
+    }
+        
+        new patientInformationFrame().setVisible(true);
+
+        
     }//GEN-LAST:event_nextBtnActionPerformed
 
     private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
@@ -263,6 +454,30 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         cosmeticPanel.setVisible(false);
         orthodonticsPanel.setVisible(false);
         oralPanel.setVisible(false);
+        
+        String gd = "General Dentistry";
+        String cd = "Cosmetic Dentistry";
+        String o = "Orthodontics";
+        String od = "Oral Dentistry";
+        
+        generalCheckBox1.setSelected(false);
+        generalCheckBox2.setSelected(false);
+        generalCheckBox3.setSelected(false);
+        generalCheckBox4.setSelected(false);
+        
+        cosmeticCheckBox1.setSelected(false);
+        cosmeticCheckBox2.setSelected(false);
+        cosmeticCheckBox3.setSelected(false);
+        cosmeticCheckBox4.setSelected(false);
+        
+        orthodonticsCheckBox1.setSelected(false);
+        orthodonticsCheckBox2.setSelected(false);
+        orthodonticsCheckBox3.setSelected(false);
+        
+        oralCheckBox1.setSelected(false);
+        oralCheckBox2.setSelected(false);
+        oralCheckBox3.setSelected(false);
+        oralCheckBox4.setSelected(false);
     }//GEN-LAST:event_generalBtnActionPerformed
 
     private void orthodonticsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orthodonticsBtnActionPerformed
@@ -270,6 +485,25 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         generalPanel.setVisible(false);
         cosmeticPanel.setVisible(false);
         oralPanel.setVisible(false);
+        
+        generalCheckBox1.setSelected(false);
+        generalCheckBox2.setSelected(false);
+        generalCheckBox3.setSelected(false);
+        generalCheckBox4.setSelected(false);
+        
+        cosmeticCheckBox1.setSelected(false);
+        cosmeticCheckBox2.setSelected(false);
+        cosmeticCheckBox3.setSelected(false);
+        cosmeticCheckBox4.setSelected(false);
+        
+        orthodonticsCheckBox1.setSelected(false);
+        orthodonticsCheckBox2.setSelected(false);
+        orthodonticsCheckBox3.setSelected(false);
+        
+        oralCheckBox1.setSelected(false);
+        oralCheckBox2.setSelected(false);
+        oralCheckBox3.setSelected(false);
+        oralCheckBox4.setSelected(false);
     }//GEN-LAST:event_orthodonticsBtnActionPerformed
 
     private void cosmeticBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cosmeticBtnActionPerformed
@@ -277,6 +511,25 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         generalPanel.setVisible(false);
         orthodonticsPanel.setVisible(false);
         oralPanel.setVisible(false);
+        
+        generalCheckBox1.setSelected(false);
+        generalCheckBox2.setSelected(false);
+        generalCheckBox3.setSelected(false);
+        generalCheckBox4.setSelected(false);
+        
+        cosmeticCheckBox1.setSelected(false);
+        cosmeticCheckBox2.setSelected(false);
+        cosmeticCheckBox3.setSelected(false);
+        cosmeticCheckBox4.setSelected(false);
+        
+        orthodonticsCheckBox1.setSelected(false);
+        orthodonticsCheckBox2.setSelected(false);
+        orthodonticsCheckBox3.setSelected(false);
+        
+        oralCheckBox1.setSelected(false);
+        oralCheckBox2.setSelected(false);
+        oralCheckBox3.setSelected(false);
+        oralCheckBox4.setSelected(false);
     }//GEN-LAST:event_cosmeticBtnActionPerformed
 
     private void oralBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oralBtnActionPerformed
@@ -284,6 +537,25 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         generalPanel.setVisible(false);
         cosmeticPanel.setVisible(false);
         orthodonticsPanel.setVisible(false);
+        
+        generalCheckBox1.setSelected(false);
+        generalCheckBox2.setSelected(false);
+        generalCheckBox3.setSelected(false);
+        generalCheckBox4.setSelected(false);
+        
+        cosmeticCheckBox1.setSelected(false);
+        cosmeticCheckBox2.setSelected(false);
+        cosmeticCheckBox3.setSelected(false);
+        cosmeticCheckBox4.setSelected(false);
+        
+        orthodonticsCheckBox1.setSelected(false);
+        orthodonticsCheckBox2.setSelected(false);
+        orthodonticsCheckBox3.setSelected(false);
+        
+        oralCheckBox1.setSelected(false);
+        oralCheckBox2.setSelected(false);
+        oralCheckBox3.setSelected(false);
+        oralCheckBox4.setSelected(false);
     }//GEN-LAST:event_oralBtnActionPerformed
 
     private void oralCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oralCheckBox3ActionPerformed
@@ -330,6 +602,9 @@ public class dentalServicesFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JButton cosmeticBtn;
     private javax.swing.JCheckBox cosmeticCheckBox1;
     private javax.swing.JCheckBox cosmeticCheckBox2;
