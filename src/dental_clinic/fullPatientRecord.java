@@ -10,6 +10,14 @@ package dental_clinic;
  * @author Ana Marie Lim
  */
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import dow.ConnectionProvider;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+import static dental_clinic.patientRecordTable.patientVariable;
 import javax.swing.JOptionPane;
 public class fullPatientRecord extends javax.swing.JFrame {
 
@@ -17,6 +25,49 @@ public class fullPatientRecord extends javax.swing.JFrame {
     public fullPatientRecord() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        fullnameField.setEditable(false);
+        dobField.setEditable(false);
+        contactField.setEditable(false);
+        emergencycontactField.setEditable(false);
+        allergiesField.setEditable(false);
+        addressField.setEditable(false);
+        maleBtn.setEnabled(false);
+        femaleBtn.setEnabled(false);
+        
+        
+        
+        try{
+            Connection con = ConnectionProvider.getCon();
+            Statement st = con.createStatement();
+            ResultSet rsCheck = st.executeQuery("SELECT * FROM patientinfo WHERE patientName ='" + patientVariable + "'");
+            
+            if(rsCheck.next()){
+                String pGender = rsCheck.getString("patientGender");
+                
+                if(pGender.equals("Male")){
+                    maleBtn.setSelected(true);
+                }else{
+                    femaleBtn.setSelected(true);
+                }
+                
+                
+                fullnameField.setText(rsCheck.getString("patientName"));
+                dobField.setText(rsCheck.getString("patientBod"));
+                contactField.setText(rsCheck.getString("patientContact"));
+                emergencycontactField.setText(rsCheck.getString("patientEmergency"));
+                allergiesField.setText(rsCheck.getString("patientAllergies"));
+                addressField.setText(rsCheck.getString("patientAddress"));
+                
+                
+                
+            }
+            
+            
+        }
+        catch(Exception e){
+            
+        }
 
     }
 
@@ -29,23 +80,25 @@ public class fullPatientRecord extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         editButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
-        dobField = new javax.swing.JLabel();
-        fullnameField = new javax.swing.JLabel();
-        contactnumField = new javax.swing.JLabel();
-        emergencycontactField = new javax.swing.JLabel();
-        allergiesField = new javax.swing.JLabel();
-        addressField = new javax.swing.JLabel();
-        jToggleButton2 = new javax.swing.JToggleButton();
-        jToggleButton4 = new javax.swing.JToggleButton();
         backButton = new javax.swing.JButton();
+        fullnameField = new javax.swing.JTextField();
+        dobField = new javax.swing.JTextField();
+        contactField = new javax.swing.JTextField();
+        emergencycontactField = new javax.swing.JTextField();
+        allergiesField = new javax.swing.JTextField();
+        addressField = new javax.swing.JTextField();
+        maleBtn = new javax.swing.JRadioButton();
+        femaleBtn = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1170, 710));
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -86,55 +139,63 @@ public class fullPatientRecord extends javax.swing.JFrame {
         jPanel1.add(removeButton);
         removeButton.setBounds(946, 65, 135, 42);
 
-        dobField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jPanel1.add(dobField);
-        dobField.setBounds(182, 340, 360, 25);
-
-        fullnameField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jPanel1.add(fullnameField);
-        fullnameField.setBounds(182, 240, 360, 30);
-
-        contactnumField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jPanel1.add(contactnumField);
-        contactnumField.setBounds(182, 430, 360, 25);
-
-        emergencycontactField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jPanel1.add(emergencycontactField);
-        emergencycontactField.setBounds(182, 520, 360, 30);
-
-        allergiesField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jPanel1.add(allergiesField);
-        allergiesField.setBounds(693, 242, 380, 30);
-
-        addressField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jPanel1.add(addressField);
-        addressField.setBounds(693, 472, 380, 25);
-
-        jToggleButton2.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
-        jToggleButton2.setText("Female");
-        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jToggleButton2);
-        jToggleButton2.setBounds(680, 350, 156, 35);
-
-        jToggleButton4.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
-        jToggleButton4.setLabel("Male");
-        jPanel1.add(jToggleButton4);
-        jToggleButton4.setBounds(860, 350, 156, 35);
-
         backButton.setContentAreaFilled(false);
         jPanel1.add(backButton);
         backButton.setBounds(70, 643, 40, 30);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ana Marie Lim\\Documents\\Dental\\2\\Updated\\fullPatientRecords.png")); // NOI18N
+        fullnameField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        fullnameField.setBorder(null);
+        jPanel1.add(fullnameField);
+        fullnameField.setBounds(180, 240, 370, 25);
+
+        dobField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        dobField.setBorder(null);
+        jPanel1.add(dobField);
+        dobField.setBounds(190, 325, 370, 30);
+
+        contactField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        contactField.setBorder(null);
+        jPanel1.add(contactField);
+        contactField.setBounds(180, 415, 370, 30);
+
+        emergencycontactField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        emergencycontactField.setBorder(null);
+        jPanel1.add(emergencycontactField);
+        emergencycontactField.setBounds(190, 520, 360, 25);
+
+        allergiesField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        allergiesField.setBorder(null);
+        jPanel1.add(allergiesField);
+        allergiesField.setBounds(690, 235, 360, 30);
+
+        addressField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        addressField.setBorder(null);
+        jPanel1.add(addressField);
+        addressField.setBounds(700, 470, 350, 30);
+
+        buttonGroup1.add(maleBtn);
+        maleBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        maleBtn.setText("Male");
+        maleBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maleBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(maleBtn);
+        maleBtn.setBounds(690, 340, 70, 60);
+
+        buttonGroup1.add(femaleBtn);
+        femaleBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        femaleBtn.setText("Female");
+        jPanel1.add(femaleBtn);
+        femaleBtn.setBounds(810, 340, 100, 60);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\Homepage (3).png")); // NOI18N
         jLabel1.setText("asd");
         jLabel1.setMaximumSize(new java.awt.Dimension(1170, 710));
         jLabel1.setMinimumSize(new java.awt.Dimension(1170, 710));
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, 0, 1194, 708);
+        jLabel1.setBounds(0, 0, 1170, 708);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 710));
 
@@ -153,9 +214,9 @@ public class fullPatientRecord extends javax.swing.JFrame {
         System.out.println("save button clicked");
     }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+    private void maleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton2ActionPerformed
+    }//GEN-LAST:event_maleBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,18 +254,19 @@ public class fullPatientRecord extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel addressField;
-    private javax.swing.JLabel allergiesField;
+    private javax.swing.JTextField addressField;
+    private javax.swing.JTextField allergiesField;
     private javax.swing.JButton backButton;
-    private javax.swing.JLabel contactnumField;
-    private javax.swing.JLabel dobField;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JTextField contactField;
+    private javax.swing.JTextField dobField;
     private javax.swing.JButton editButton;
-    private javax.swing.JLabel emergencycontactField;
-    private javax.swing.JLabel fullnameField;
+    private javax.swing.JTextField emergencycontactField;
+    private javax.swing.JRadioButton femaleBtn;
+    private javax.swing.JTextField fullnameField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton jToggleButton4;
+    private javax.swing.JRadioButton maleBtn;
     private javax.swing.JButton removeButton;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
