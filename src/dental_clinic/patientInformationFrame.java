@@ -77,7 +77,7 @@ public class patientInformationFrame extends javax.swing.JFrame {
         patientName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         patientName.setBorder(null);
         jPanel1.add(patientName);
-        patientName.setBounds(120, 200, 430, 30);
+        patientName.setBounds(180, 200, 370, 30);
 
         patientBday.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         patientBday.setBorder(null);
@@ -87,7 +87,7 @@ public class patientInformationFrame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(patientBday);
-        patientBday.setBounds(120, 300, 440, 30);
+        patientBday.setBounds(180, 295, 380, 25);
 
         patientNumber.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         patientNumber.setBorder(null);
@@ -97,7 +97,7 @@ public class patientInformationFrame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(patientNumber);
-        patientNumber.setBounds(110, 390, 450, 30);
+        patientNumber.setBounds(180, 380, 380, 30);
 
         patientEmergencyCon.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         patientEmergencyCon.setBorder(null);
@@ -107,17 +107,17 @@ public class patientInformationFrame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(patientEmergencyCon);
-        patientEmergencyCon.setBounds(120, 480, 430, 30);
+        patientEmergencyCon.setBounds(180, 480, 370, 30);
 
         patientAddress.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         patientAddress.setBorder(null);
         jPanel1.add(patientAddress);
-        patientAddress.setBounds(120, 570, 430, 30);
+        patientAddress.setBounds(190, 565, 360, 30);
 
         patientAllergies.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         patientAllergies.setBorder(null);
         jPanel1.add(patientAllergies);
-        patientAllergies.setBounds(620, 200, 430, 30);
+        patientAllergies.setBounds(690, 200, 360, 30);
 
         maleBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         maleBtn.setText("Male");
@@ -132,7 +132,7 @@ public class patientInformationFrame extends javax.swing.JFrame {
         femaleBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         femaleBtn.setText("Female");
         jPanel1.add(femaleBtn);
-        femaleBtn.setBounds(810, 300, 80, 60);
+        femaleBtn.setBounds(810, 300, 100, 60);
 
         pregnantBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         pregnantBtn.setText("Pregnant Woman");
@@ -186,7 +186,7 @@ public class patientInformationFrame extends javax.swing.JFrame {
         jPanel1.add(returnBtn);
         returnBtn.setBounds(60, 630, 60, 50);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ana Marie Lim\\Documents\\Dental\\2\\Updated\\Patient Information Forms.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maggie\\Desktop\\ClearView Images\\infoFrame.png")); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 1170, 710);
 
