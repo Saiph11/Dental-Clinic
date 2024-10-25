@@ -83,10 +83,15 @@ public class guestSignupFrame extends javax.swing.JFrame {
         returnBtn.setBorderPainted(false);
         returnBtn.setContentAreaFilled(false);
         returnBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        returnBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(returnBtn);
         returnBtn.setBounds(40, 50, 70, 50);
 
-        guestSignupBG.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maggie\\Desktop\\ClearView Images\\guestSignup.png")); // NOI18N
+        guestSignupBG.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\1.png")); // NOI18N
         jPanel1.add(guestSignupBG);
         guestSignupBG.setBounds(0, 0, 1172, 710);
 
@@ -118,21 +123,41 @@ public class guestSignupFrame extends javax.swing.JFrame {
             if (rsCheck.next()) {
                 // Username exists, show a message
                 JOptionPane.showMessageDialog(null, "Username is already taken. Please choose another one.");
+                signupName.setText("");
+                signupUsername.setText("");
+                signupPassword.setText("");
+                signupRePassword.setText("");
+                
             } else {
                 // Check if any field is empty
                 if (name.isEmpty() ||  userName.isEmpty() || password.isEmpty() || repassword.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Please fill out all fields.");
+                signupName.setText("");
+                signupUsername.setText("");
+                signupPassword.setText("");
+                signupRePassword.setText("");
+                
                 } else if (!password.equals(repassword)) {
                     JOptionPane.showMessageDialog(null, "Passwords do not match!");
+                signupName.setText("");
+                signupUsername.setText("");
+                signupPassword.setText("");
+                signupRePassword.setText("");
+                    
                 } else {
                     // Insert the new user into the database (leaving UserRoles, MobileNumber, and Email as NULL)
                     int result = st.executeUpdate("INSERT INTO useraccounts (userFullName, userUserName, userPassword) VALUES ('" + name + "', '" + userName + "', '" + password + "')");
                     if (result > 0) {
                         JOptionPane.showMessageDialog(null, "Signed up successfully");
+                        JOptionPane.showMessageDialog(null,"Redirecting to Guest Login.");
                         setVisible(false);
                         new guestLoginFrame().setVisible(true);
                     } else {
                         JOptionPane.showMessageDialog(null, "Error signing up. Please try again.");
+                signupName.setText("");
+                signupUsername.setText("");
+                signupPassword.setText("");
+                signupRePassword.setText("");
                     }
                 }
             }
@@ -142,6 +167,14 @@ public class guestSignupFrame extends javax.swing.JFrame {
 
     
     }//GEN-LAST:event_signupBtnActionPerformed
+
+    private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
+int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?", null, JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION){
+            this.setVisible(false);
+            new guestLoginFrame().setVisible(true);
+        }
+    }//GEN-LAST:event_returnBtnActionPerformed
 
     /**
      * @param args the command line arguments

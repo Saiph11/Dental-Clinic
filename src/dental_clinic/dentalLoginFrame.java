@@ -5,6 +5,7 @@
 package dental_clinic;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -66,12 +67,22 @@ public class dentalLoginFrame extends javax.swing.JFrame {
                 guestBtnMouseExited(evt);
             }
         });
+        guestBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guestBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(guestBtn);
         guestBtn.setBounds(210, 330, 300, 50);
 
         exitBtn.setBorderPainted(false);
         exitBtn.setContentAreaFilled(false);
         exitBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(exitBtn);
         exitBtn.setBounds(40, 40, 50, 60);
 
@@ -86,10 +97,15 @@ public class dentalLoginFrame extends javax.swing.JFrame {
                 empBtnMouseExited(evt);
             }
         });
+        empBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                empBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(empBtn);
         empBtn.setBounds(210, 400, 290, 50);
 
-        userLoginBG.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maggie\\Desktop\\ClearView Images\\userLogin.png")); // NOI18N
+        userLoginBG.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\userLogin.png")); // NOI18N
         jPanel1.add(userLoginBG);
         userLoginBG.setBounds(0, 0, 710, 530);
 
@@ -113,6 +129,24 @@ public class dentalLoginFrame extends javax.swing.JFrame {
     private void empBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empBtnMouseExited
         empTxt.setForeground(Color.decode("#788bff"));
     }//GEN-LAST:event_empBtnMouseExited
+
+    private void guestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestBtnActionPerformed
+            this.setVisible(false);
+            new guestLoginFrame().setVisible(true);
+    }//GEN-LAST:event_guestBtnActionPerformed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+    int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?", null, JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION){
+            this.setVisible(false);
+            new employeeLoginFrame().setVisible(true);
+        }
+    }//GEN-LAST:event_exitBtnActionPerformed
+
+    private void empBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empBtnActionPerformed
+            this.setVisible(false);
+            new employeeLoginFrame().setVisible(true);
+    }//GEN-LAST:event_empBtnActionPerformed
 
     /**
      * @param args the command line arguments

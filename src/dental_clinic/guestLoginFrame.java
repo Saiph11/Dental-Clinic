@@ -128,13 +128,10 @@ public class guestLoginFrame extends javax.swing.JFrame {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         String guestUser = guestUsername.getText();
         String guestPass = guestPassword.getText();
-        
-        int temp = 0;
-        
+
         try {
-            
             Connection con = ConnectionProvider.getCon();
-            
+
             if (con == null) {
                 JOptionPane.showMessageDialog(null, "Database connection failed.");
                 return;
@@ -142,21 +139,25 @@ public class guestLoginFrame extends javax.swing.JFrame {
 
             Statement st = con.createStatement();
 
-            // First, check if the username already exists
-            ResultSet rsCheck = st.executeQuery("SELECT * FROM useraccounts WHERE userUserName='" + guestUser + "' and userPassword ='"+ guestPass +"'");
-            
-                 
-            if(guestUser.isEmpty() && guestPass.isEmpty()){
+            // First, check if the username and password are empty
+            if (guestUser.isEmpty() && guestPass.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Please enter Username and Password");
-            } else if (guestUser.isEmpty() || guestPass.isEmpty()){
+            } else if (guestUser.isEmpty() || guestPass.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Fields cannot be left blank.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (rsCheck.next()){
-                JOptionPane.showMessageDialog(null, "Login Successful!");
-                setVisible(false);
-                new dentalServicesFrame().setVisible(true);
+            } else {
+                // Check if the account exists
+                ResultSet rsCheck = st.executeQuery("SELECT * FROM useraccounts WHERE userUserName='" + guestUser + "' AND userPassword='" + guestPass + "'");
+
+                if (rsCheck.next()) {
+                    // Account exists and credentials are correct
+                    JOptionPane.showMessageDialog(null, "Login Successful!");
+                    setVisible(false);
+                    new dentalServicesFrame().setVisible(true);
+                } else {
+                    // No matching account found
+                    JOptionPane.showMessageDialog(null, "Account does not Exist or Incorrect credentials.");
+                }
             }
-            
-            
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "SQL Error: " + e.getMessage());
         }
