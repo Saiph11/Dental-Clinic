@@ -4,10 +4,13 @@
  */
 package dental_clinic;
 
-/**
- *
- * @author Maggie
- */
+import java.sql.*;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
 public class patientInformationFrame extends javax.swing.JFrame {
 
     /**
@@ -16,8 +19,27 @@ public class patientInformationFrame extends javax.swing.JFrame {
     public patientInformationFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
+        Connect();
+    }
+    
+    public void Connect() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dental", "root", "padabaKO21");
+            System.out.println("Connected!");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(patientInformationFrame.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error 1!");
+        } catch (SQLException ex) {
+            Logger.getLogger(patientInformationFrame.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error 2!");
+        }
+
     }
 
+     
+            Connection con;
+            PreparedStatement pst;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,6 +49,8 @@ public class patientInformationFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         patientName = new javax.swing.JTextField();
         patientBday = new javax.swing.JTextField();
@@ -34,11 +58,12 @@ public class patientInformationFrame extends javax.swing.JFrame {
         patientEmergencyCon = new javax.swing.JTextField();
         patientAddress = new javax.swing.JTextField();
         patientAllergies = new javax.swing.JTextField();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        maleBtn = new javax.swing.JRadioButton();
+        femaleBtn = new javax.swing.JRadioButton();
+        pregnantBtn = new javax.swing.JRadioButton();
+        seniorBtn = new javax.swing.JRadioButton();
+        pwdBtn = new javax.swing.JRadioButton();
+        naBtn = new javax.swing.JRadioButton();
         nextBtn = new javax.swing.JButton();
         returnBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -52,17 +77,27 @@ public class patientInformationFrame extends javax.swing.JFrame {
         patientName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         patientName.setBorder(null);
         jPanel1.add(patientName);
-        patientName.setBounds(180, 200, 360, 30);
+        patientName.setBounds(120, 200, 430, 30);
 
         patientBday.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         patientBday.setBorder(null);
+        patientBday.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                patientBdayActionPerformed(evt);
+            }
+        });
         jPanel1.add(patientBday);
-        patientBday.setBounds(180, 290, 350, 30);
+        patientBday.setBounds(120, 300, 440, 30);
 
         patientNumber.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         patientNumber.setBorder(null);
+        patientNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                patientNumberActionPerformed(evt);
+            }
+        });
         jPanel1.add(patientNumber);
-        patientNumber.setBounds(180, 380, 350, 30);
+        patientNumber.setBounds(110, 390, 450, 30);
 
         patientEmergencyCon.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         patientEmergencyCon.setBorder(null);
@@ -72,42 +107,47 @@ public class patientInformationFrame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(patientEmergencyCon);
-        patientEmergencyCon.setBounds(190, 470, 360, 40);
+        patientEmergencyCon.setBounds(120, 480, 430, 30);
 
         patientAddress.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         patientAddress.setBorder(null);
         jPanel1.add(patientAddress);
-        patientAddress.setBounds(190, 560, 360, 30);
+        patientAddress.setBounds(120, 570, 430, 30);
 
         patientAllergies.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         patientAllergies.setBorder(null);
         jPanel1.add(patientAllergies);
-        patientAllergies.setBounds(690, 200, 350, 30);
+        patientAllergies.setBounds(620, 200, 430, 30);
 
-        jRadioButton5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jRadioButton5.setText("Female");
-        jPanel1.add(jRadioButton5);
-        jRadioButton5.setBounds(770, 300, 110, 60);
+        maleBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        maleBtn.setText("Male");
+        jPanel1.add(maleBtn);
+        maleBtn.setBounds(670, 290, 100, 60);
 
-        jRadioButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jRadioButton4.setText("Male");
-        jPanel1.add(jRadioButton4);
-        jRadioButton4.setBounds(670, 300, 100, 60);
+        femaleBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        femaleBtn.setText("Female");
+        jPanel1.add(femaleBtn);
+        femaleBtn.setBounds(760, 290, 110, 60);
 
-        jRadioButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jRadioButton1.setText("Pregnant Woman");
-        jPanel1.add(jRadioButton1);
-        jRadioButton1.setBounds(670, 550, 250, 33);
+        pregnantBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        pregnantBtn.setText("Pregnant Woman");
+        jPanel1.add(pregnantBtn);
+        pregnantBtn.setBounds(670, 550, 250, 30);
 
-        jRadioButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jRadioButton2.setText("Senior Citizen");
-        jPanel1.add(jRadioButton2);
-        jRadioButton2.setBounds(670, 460, 180, 33);
+        seniorBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        seniorBtn.setText("Senior Citizen");
+        jPanel1.add(seniorBtn);
+        seniorBtn.setBounds(670, 460, 180, 30);
 
-        jRadioButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jRadioButton3.setText("Person with Disability");
-        jPanel1.add(jRadioButton3);
-        jRadioButton3.setBounds(670, 490, 250, 60);
+        pwdBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        pwdBtn.setText("Person with Disability");
+        jPanel1.add(pwdBtn);
+        pwdBtn.setBounds(670, 490, 250, 60);
+
+        naBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        naBtn.setText("N/A");
+        jPanel1.add(naBtn);
+        naBtn.setBounds(670, 580, 250, 40);
 
         nextBtn.setBorderPainted(false);
         nextBtn.setContentAreaFilled(false);
@@ -131,7 +171,7 @@ public class patientInformationFrame extends javax.swing.JFrame {
         jPanel1.add(returnBtn);
         returnBtn.setBounds(60, 630, 60, 50);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maggie\\Desktop\\ClearView Images\\infoFrame.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Windows10\\Downloads\\OneDrive_1_10-25-2024\\full patient record.png")); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 1170, 710);
 
@@ -145,12 +185,75 @@ public class patientInformationFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_patientEmergencyConActionPerformed
 
     private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
-        // TODO add your handling code here:
+        String name = patientName.getText();
+        String bday = patientBday.getText();
+        String contact = patientNumber.getText();
+        String emergency = patientEmergencyCon.getText();
+        String address = patientAddress.getText();
+        String allergies = patientAllergies.getText();
+
+
+        buttonGroup1.add(maleBtn);
+        buttonGroup1.add(femaleBtn);
+
+        // Set action commands for gender buttons
+        maleBtn.setActionCommand("Male");
+        femaleBtn.setActionCommand("Female");
+
+        // Group priority radio buttons
+        buttonGroup2.add(pregnantBtn);
+        buttonGroup2.add(seniorBtn);
+        buttonGroup2.add(pwdBtn);
+        buttonGroup2.add(naBtn);
+
+        // Set action commands for priority buttons
+        pregnantBtn.setActionCommand("Pregnant");
+        seniorBtn.setActionCommand("Senior");
+        pwdBtn.setActionCommand("PWD");
+        naBtn.setActionCommand("N/A");
+
+        // Retrieve selected gender and priority
+        String selectedGender = buttonGroup1.getSelection() != null ? buttonGroup1.getSelection().getActionCommand() : "No gender selected";
+        String selectedPriority = buttonGroup2.getSelection() != null ? buttonGroup2.getSelection().getActionCommand() : "No priority selected";
+
+        // Display or use the selected values
+        System.out.println("Selected Gender: " + selectedGender);
+        System.out.println("Selected Priority: " + selectedPriority);
+       
+            
+        try{
+           pst = con.prepareStatement("INSERT INTO patientrecords (patientName,patientBod,patientContact,patientEmergency,patientAddress,patientAllergies,patientGender,patientPriority) VALUES (?,?,?,?,?,?,?,?)");
+           
+           pst.setString(1, name);
+           pst.setString(2, bday);
+           pst.setString(3, contact);
+           pst.setString(4, emergency);
+           pst.setString(5, address);
+           pst.setString(6, allergies);
+           pst.setString(7, selectedGender);
+           pst.setString(8, selectedPriority);
+           pst.executeUpdate();
+           
+           JOptionPane.showMessageDialog(null,"Info saved! :)");
+     
+           
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "SQL Error: " + e.getMessage());
+        }
+       
     }//GEN-LAST:event_nextBtnActionPerformed
 
     private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_returnBtnActionPerformed
+
+    private void patientBdayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientBdayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_patientBdayActionPerformed
+
+    private void patientNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_patientNumberActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,13 +291,13 @@ public class patientInformationFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JRadioButton femaleBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
+    private javax.swing.JRadioButton maleBtn;
+    private javax.swing.JRadioButton naBtn;
     private javax.swing.JButton nextBtn;
     private javax.swing.JTextField patientAddress;
     private javax.swing.JTextField patientAllergies;
@@ -202,6 +305,9 @@ public class patientInformationFrame extends javax.swing.JFrame {
     private javax.swing.JTextField patientEmergencyCon;
     private javax.swing.JTextField patientName;
     private javax.swing.JTextField patientNumber;
+    private javax.swing.JRadioButton pregnantBtn;
+    private javax.swing.JRadioButton pwdBtn;
     private javax.swing.JButton returnBtn;
+    private javax.swing.JRadioButton seniorBtn;
     // End of variables declaration//GEN-END:variables
 }
