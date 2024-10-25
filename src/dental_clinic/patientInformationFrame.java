@@ -25,7 +25,7 @@ public class patientInformationFrame extends javax.swing.JFrame {
     public void Connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dental", "root", "padabaKO21");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dental", "root", "helios5600");
             System.out.println("Connected!");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(patientInformationFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -121,33 +121,48 @@ public class patientInformationFrame extends javax.swing.JFrame {
 
         maleBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         maleBtn.setText("Male");
+        maleBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maleBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(maleBtn);
-        maleBtn.setBounds(670, 290, 100, 60);
+        maleBtn.setBounds(690, 300, 70, 60);
 
         femaleBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         femaleBtn.setText("Female");
         jPanel1.add(femaleBtn);
-        femaleBtn.setBounds(760, 290, 110, 60);
+        femaleBtn.setBounds(810, 300, 80, 60);
 
         pregnantBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         pregnantBtn.setText("Pregnant Woman");
         jPanel1.add(pregnantBtn);
-        pregnantBtn.setBounds(670, 550, 250, 30);
+        pregnantBtn.setBounds(670, 520, 250, 20);
 
         seniorBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         seniorBtn.setText("Senior Citizen");
         jPanel1.add(seniorBtn);
-        seniorBtn.setBounds(670, 460, 180, 30);
+        seniorBtn.setBounds(670, 460, 180, 20);
 
         pwdBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         pwdBtn.setText("Person with Disability");
+        pwdBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pwdBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(pwdBtn);
-        pwdBtn.setBounds(670, 490, 250, 60);
+        pwdBtn.setBounds(670, 490, 250, 20);
 
         naBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         naBtn.setText("N/A");
+        naBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                naBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(naBtn);
-        naBtn.setBounds(670, 580, 250, 40);
+        naBtn.setBounds(670, 550, 250, 20);
 
         nextBtn.setBorderPainted(false);
         nextBtn.setContentAreaFilled(false);
@@ -171,7 +186,7 @@ public class patientInformationFrame extends javax.swing.JFrame {
         jPanel1.add(returnBtn);
         returnBtn.setBounds(60, 630, 60, 50);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Windows10\\Downloads\\OneDrive_1_10-25-2024\\full patient record.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ana Marie Lim\\Documents\\Dental\\2\\Updated\\Patient Information Forms.png")); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 1170, 710);
 
@@ -222,7 +237,7 @@ public class patientInformationFrame extends javax.swing.JFrame {
        
             
         try{
-           pst = con.prepareStatement("INSERT INTO patientrecords (patientName,patientBod,patientContact,patientEmergency,patientAddress,patientAllergies,patientGender,patientPriority) VALUES (?,?,?,?,?,?,?,?)");
+           pst = con.prepareStatement("INSERT INTO patientrecords (patientName,patientDOB,patientContact,patientEmergency,patientAddress,patientAllergies,patientGender,patientPriority) VALUES (?,?,?,?,?,?,?,?)");
            
            pst.setString(1, name);
            pst.setString(2, bday);
@@ -254,6 +269,18 @@ public class patientInformationFrame extends javax.swing.JFrame {
     private void patientNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientNumberActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_patientNumberActionPerformed
+
+    private void maleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maleBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_maleBtnActionPerformed
+
+    private void naBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_naBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_naBtnActionPerformed
+
+    private void pwdBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pwdBtnActionPerformed
 
     /**
      * @param args the command line arguments
