@@ -9,10 +9,18 @@ package dental_clinic;
  *
  * @author Ana Marie Lim
  */
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import dow.ConnectionProvider;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
+import javax.swing.JOptionPane;
+
 public class patientRecordTable extends javax.swing.JFrame {
 
+    public static String patientVariable;
     /** Creates new form fullPatientRecord */
     public patientRecordTable() {
         initComponents();
@@ -38,6 +46,12 @@ public class patientRecordTable extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1170, 710));
+        setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -90,12 +104,12 @@ public class patientRecordTable extends javax.swing.JFrame {
         jPanel1.add(backButton);
         backButton.setBounds(70, 633, 40, 30);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ana Marie Lim\\Documents\\Dental\\2\\Updated\\Patient Records.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\Patient Records.png")); // NOI18N
         jLabel1.setText("asd");
         jLabel1.setMaximumSize(new java.awt.Dimension(1170, 710));
         jLabel1.setMinimumSize(new java.awt.Dimension(1170, 710));
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, 0, 1194, 708);
+        jLabel1.setBounds(0, 0, 1170, 708);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 710));
 
@@ -103,8 +117,35 @@ public class patientRecordTable extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewFullRecordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewFullRecordButtonActionPerformed
-        // TODO add your handling code here:
+        int row = jTable1.getSelectedRow();
+        System.out.println(jTable1.getValueAt(row, 0).toString());
+        patientVariable = jTable1.getValueAt(row, 0).toString();
+        
+        setVisible(false);
+        new fullPatientRecord().setVisible(true);
+        
     }//GEN-LAST:event_viewFullRecordButtonActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+     try{
+            Connection con = ConnectionProvider.getCon();
+            Statement st = con.createStatement();
+            Statement st2 = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT *FROM patientinfo");
+            ResultSet rs2 = st2.executeQuery("SELECT *FROM dental_services");
+
+            DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+            model.setRowCount(0);
+
+            while(rs.next() && rs2.next()){
+                model.addRow(new Object[]{rs.getString("patientName"),rs.getString("patientBod"),rs.getString("patientContact"), rs2.getString("ServiceType")});
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
