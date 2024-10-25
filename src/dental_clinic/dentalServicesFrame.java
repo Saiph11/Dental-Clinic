@@ -50,10 +50,6 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         orthodonticsBtn = new javax.swing.JButton();
         cosmeticBtn = new javax.swing.JButton();
         oralBtn = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
         oralPanel = new javax.swing.JPanel();
         oralCheckBox1 = new javax.swing.JCheckBox();
         oralCheckBox2 = new javax.swing.JCheckBox();
@@ -146,26 +142,6 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         });
         jPanel1.add(oralBtn);
         oralBtn.setBounds(150, 500, 490, 90);
-
-        buttonGroup3.add(jRadioButton1);
-        jRadioButton1.setText("jRadioButton1");
-        jPanel1.add(jRadioButton1);
-        jRadioButton1.setBounds(100, 160, 540, 90);
-
-        buttonGroup3.add(jRadioButton2);
-        jRadioButton2.setText("jRadioButton2");
-        jPanel1.add(jRadioButton2);
-        jRadioButton2.setBounds(100, 270, 550, 100);
-
-        buttonGroup3.add(jRadioButton3);
-        jRadioButton3.setText("jRadioButton3");
-        jPanel1.add(jRadioButton3);
-        jRadioButton3.setBounds(100, 390, 550, 90);
-
-        buttonGroup3.add(jRadioButton4);
-        jRadioButton4.setText("jRadioButton4");
-        jPanel1.add(jRadioButton4);
-        jRadioButton4.setBounds(100, 500, 540, 90);
 
         oralPanel.setOpaque(false);
         oralPanel.setLayout(null);
@@ -298,7 +274,12 @@ public class dentalServicesFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
-  if (jRadioButton1.isSelected()) { // Ensure generalBtn is selected if needed
+        String gen = "General Dentistry";
+        String cos = "Cosmetic Dentistry";
+        String ortho = "Orthodontics";
+        String oral = "Oral Surgery";
+        
+        if (generalPanel.isVisible()) { // Ensure generalBtn is selected if needed
         try (Connection con = ConnectionProvider.getCon();
              Statement st = con.createStatement()) {
 
@@ -325,7 +306,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
 
             // Insert data if any checkboxes are selected
             if (serviceCategoryValues.length() > 0) {
-                String query = "INSERT INTO dental_services (ServiceCategory) VALUES ('" + serviceCategoryValues.toString() + "')";
+                String query = "INSERT INTO dental_services (ServiceCategory,ServiceType) VALUES ('" + gen + "', '" + serviceCategoryValues.toString() + "')";
                 st.executeUpdate(query);
                 JOptionPane.showMessageDialog(null, "Data inserted successfully!");
             } else {
@@ -337,7 +318,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         }
         
         
-    } else if (jRadioButton2.isSelected()) { // Ensure generalBtn is selected if needed
+    } else if (cosmeticPanel.isVisible()) { // Ensure generalBtn is selected if needed
         try (Connection con = ConnectionProvider.getCon();
              Statement st = con.createStatement()) {
 
@@ -354,7 +335,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
                 serviceCategoryValues.append(cosmeticCheckBox3.getText()).append(", ");
             }
             if (cosmeticCheckBox4.isSelected()) {
-                serviceCategoryValues.append(cosmeticCheckBox3.getText()).append(", ");
+                serviceCategoryValues.append(cosmeticCheckBox4.getText()).append(", ");
             }
 
             // Remove trailing comma and space
@@ -364,7 +345,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
 
             // Insert data if any checkboxes are selected
             if (serviceCategoryValues.length() > 0) {
-                String query = "INSERT INTO dental_services (ServiceCategory) VALUES ('" + serviceCategoryValues.toString() + "')";
+                String query = "INSERT INTO dental_services (ServiceCategory,ServiceType) VALUES ('" + cos + "', '" + serviceCategoryValues.toString() + "')";
                 st.executeUpdate(query);
                 JOptionPane.showMessageDialog(null, "Data inserted successfully!");
             } else {
@@ -374,7 +355,9 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "SQL Error: " + ex.getMessage());
         }
-    }else if (jRadioButton3.isSelected()) { // Ensure generalBtn is selected if needed
+        
+        
+    }else if (orthodonticsPanel.isVisible()) { // Ensure generalBtn is selected if needed
         try (Connection con = ConnectionProvider.getCon();
              Statement st = con.createStatement()) {
 
@@ -391,6 +374,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
                 serviceCategoryValues.append(orthodonticsCheckBox3.getText()).append(", ");
             }
 
+
             // Remove trailing comma and space
             if (serviceCategoryValues.length() > 0) {
                 serviceCategoryValues.setLength(serviceCategoryValues.length() - 2);
@@ -398,7 +382,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
 
             // Insert data if any checkboxes are selected
             if (serviceCategoryValues.length() > 0) {
-                String query = "INSERT INTO dental_services (ServiceCategory) VALUES ('" + serviceCategoryValues.toString() + "')";
+                String query = "INSERT INTO dental_services (ServiceCategory,ServiceType) VALUES ('" + ortho + "', '" + serviceCategoryValues.toString() + "')";
                 st.executeUpdate(query);
                 JOptionPane.showMessageDialog(null, "Data inserted successfully!");
             } else {
@@ -408,8 +392,10 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "SQL Error: " + ex.getMessage());
         }
+        
+        
     }
-    else if (jRadioButton4.isSelected()) { // Ensure generalBtn is selected if needed
+    else if (oralPanel.isVisible()) { // Ensure generalBtn is selected if needed
         try (Connection con = ConnectionProvider.getCon();
              Statement st = con.createStatement()) {
 
@@ -429,6 +415,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
                 serviceCategoryValues.append(oralCheckBox3.getText()).append(", ");
             }
 
+
             // Remove trailing comma and space
             if (serviceCategoryValues.length() > 0) {
                 serviceCategoryValues.setLength(serviceCategoryValues.length() - 2);
@@ -436,7 +423,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
 
             // Insert data if any checkboxes are selected
             if (serviceCategoryValues.length() > 0) {
-                String query = "INSERT INTO dental_services (ServiceCategory) VALUES ('" + serviceCategoryValues.toString() + "')";
+                String query = "INSERT INTO dental_services (ServiceCategory,ServiceType) VALUES ('" + oral + "', '" + serviceCategoryValues.toString() + "')";
                 st.executeUpdate(query);
                 JOptionPane.showMessageDialog(null, "Data inserted successfully!");
             } else {
@@ -446,10 +433,14 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "SQL Error: " + ex.getMessage());
         }
+        
+        
     }
     else {
         JOptionPane.showMessageDialog(null, "Please select a category.");
     }
+        
+        new patientInformationFrame().setVisible(true);
 
         
     }//GEN-LAST:event_nextBtnActionPerformed
@@ -628,10 +619,6 @@ public class dentalServicesFrame extends javax.swing.JFrame {
     private javax.swing.JPanel generalPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JButton nextBtn;
     private javax.swing.JButton oralBtn;
     private javax.swing.JCheckBox oralCheckBox1;
