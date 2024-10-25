@@ -6,25 +6,42 @@ package dental_clinic;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import dow.ConnectionProvider;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 public class dentalAdminPanel2 extends javax.swing.JFrame {
 
-    private int employeeIDD = 0;
+  public void Connect() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dental", "root", "padabaKO21");
+            System.out.println("Connected!");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(patientInformationFrame.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error 1!");
+        } catch (SQLException ex) {
+            Logger.getLogger(patientInformationFrame.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error 2!");
+        }
+
+    }
     /**
      * Creates new form dentalAdminPanel2
      */
     public dentalAdminPanel2() {
         initComponents();
         this.setLocationRelativeTo(null);
+        Connect();
     }
     
+    Connection con;
+    PreparedStatement pst;
     private boolean validateFields(String formType) {
-        if (formType.equals("edit") && !employeeName.getText().equals("") && !employeeID.getText().equals("") && !employeePassword.getText().equals("") && !employeeRePassword.getText().equals("")) {
+        if (formType.equals("edit") && !employeeName.getText().equals("") && !employeeUsername.getText().equals("") && !employeePassword.getText().equals("") && !employeeRePassword.getText().equals("")) {
             return false;
-        } else if (formType.equals("new") && !employeeName.getText().equals("") && !employeeID.getText().equals("") && !employeePassword.getText().equals("") && !employeeRePassword.getText().equals("")) {
+        } else if (formType.equals("new") && !employeeName.getText().equals("") && !employeeUsername.getText().equals("") && !employeePassword.getText().equals("") && !employeeRePassword.getText().equals("")) {
             return false;
         } else {
             return true;
@@ -42,11 +59,11 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        saveBtn = new javax.swing.JButton();
+        logoutBtn = new javax.swing.JButton();
         removeBtn = new javax.swing.JButton();
-        editBtn = new javax.swing.JButton();
+        clearBtn = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
-        employeeID = new javax.swing.JTextField();
+        employeeUsername = new javax.swing.JTextField();
         employeeName = new javax.swing.JTextField();
         exitBtn = new javax.swing.JButton();
         employeeRePassword = new javax.swing.JPasswordField();
@@ -66,33 +83,38 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
 
         jPanel1.setLayout(null);
 
-        saveBtn.setBorderPainted(false);
-        saveBtn.setContentAreaFilled(false);
-        saveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+        logoutBtn.setBorderPainted(false);
+        logoutBtn.setContentAreaFilled(false);
+        logoutBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logoutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveBtnActionPerformed(evt);
+                logoutBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(saveBtn);
-        saveBtn.setBounds(960, 610, 120, 40);
+        jPanel1.add(logoutBtn);
+        logoutBtn.setBounds(960, 610, 120, 40);
 
         removeBtn.setBorderPainted(false);
         removeBtn.setContentAreaFilled(false);
         removeBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        removeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(removeBtn);
         removeBtn.setBounds(790, 610, 120, 40);
 
-        editBtn.setBorderPainted(false);
-        editBtn.setContentAreaFilled(false);
-        editBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        editBtn.addActionListener(new java.awt.event.ActionListener() {
+        clearBtn.setBorderPainted(false);
+        clearBtn.setContentAreaFilled(false);
+        clearBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editBtnActionPerformed(evt);
+                clearBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(editBtn);
-        editBtn.setBounds(960, 540, 120, 40);
+        jPanel1.add(clearBtn);
+        clearBtn.setBounds(960, 540, 120, 40);
 
         addBtn.setBorderPainted(false);
         addBtn.setContentAreaFilled(false);
@@ -105,10 +127,10 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
         jPanel1.add(addBtn);
         addBtn.setBounds(790, 540, 120, 40);
 
-        employeeID.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        employeeID.setBorder(null);
-        jPanel1.add(employeeID);
-        employeeID.setBounds(840, 260, 250, 30);
+        employeeUsername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        employeeUsername.setBorder(null);
+        jPanel1.add(employeeUsername);
+        employeeUsername.setBounds(840, 260, 250, 30);
 
         employeeName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         employeeName.setBorder(null);
@@ -164,7 +186,7 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(70, 190, 630, 450);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maggie\\Desktop\\ClearView Images\\adminPanel.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Windows10\\Downloads\\new dede.png")); // NOI18N
         jLabel1.setText("jLabel1");
         jLabel1.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -190,24 +212,25 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
     if (validateFields("new")){
-        JOptionPane.showMessageDialog(null, "Fields cannott be left blank.",null, JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Fields cannot be left blank.",null, JOptionPane.ERROR_MESSAGE);
         return;
         
     }
   
         String name = employeeName.getText();
-        String ID = employeeID.getText();
+        String ID = employeeUsername.getText();
         String password = employeePassword.getText();
         String repassword = employeeRePassword.getText();
         
       
-        try (Connection con = ConnectionProvider.getCon()) {
-            String sql = "INSERT INTO employeeaccounts (employeeName, employeeUserName, employeePassword) VALUES (?,?, ?)";
-            try (PreparedStatement ps = con.prepareStatement(sql)) {
+        try{
+            
+            pst = con.prepareStatement("INSERT INTO employeeaccounts (employeeUserName, employeeName, employeePassword) VALUES (?,?,?)");
+            
                 
-                ps.setString(0, ID);
-                ps.setString(1, name);
-                ps.setString(2, password);
+                pst.setString(1, ID);
+                pst.setString(2, name);
+                pst.setString(3, password);
                  
                 
                 if(!password.contains(repassword)){
@@ -215,23 +238,23 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
                     
                 }
                 else{
-                ps.executeUpdate();
+                pst.executeUpdate();
                 JOptionPane.showMessageDialog(null, "User added successfully.");
                 setVisible(false);
                 new dentalAdminPanel2().setVisible(true);
                 }
-            }
+            
         }catch (SQLIntegrityConstraintViolationException e){
             JOptionPane.showMessageDialog(null,"User ID already exist.");
             employeeName.setText("");
-            employeeID.setText("");
+            employeeUsername.setText("");
             employeePassword.setText("");
             employeeRePassword.setText("");
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error saving user.", "Error", JOptionPane.ERROR_MESSAGE);
             employeeName.setText("");
-            employeeID.setText("");
+            employeeUsername.setText("");
             employeePassword.setText("");
             employeeRePassword.setText("");
             
@@ -249,7 +272,6 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         try{
-            Connection con = ConnectionProvider.getCon();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT *FROM employeeaccounts");
             
@@ -257,118 +279,24 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
             model.setRowCount(0);
             
             while(rs.next()){
-                model.addRow(new Object[]{rs.getString("employeeID"),rs.getString("employeeName"),rs.getString("employeePassword")});
+                model.addRow(new Object[]{rs.getString("employeeID"),rs.getString("employeeUserName"),rs.getString("employeeName"),rs.getString("employeePassword")});
             }
             
         }catch(Exception e){
             e.printStackTrace();
         }
-        editBtn.setEnabled(false);
+        clearBtn.setEnabled(false);
         
         
     }//GEN-LAST:event_formComponentShown
 
-    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
-if (validateFields("new")){
-        JOptionPane.showMessageDialog(null, "Fields cannott be left blank.",null, JOptionPane.ERROR_MESSAGE);
-        return;
-        
+    private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
+      int choice =  JOptionPane.showConfirmDialog(null,"Are you sure you want to log out?",null,JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION){
+        setVisible(false);
+        new employeeLoginFrame().setVisible(true);
         }
-        String name = employeeName.getText();
-        String ID = employeeID.getText();
-@SuppressWarnings("deprecation")
-        String password = employeePassword.getText();
-@SuppressWarnings("deprecation")
-        String repassword = employeeRePassword.getText();
-        
-        int selectedRow = jTable1.getSelectedRow();
-        
-        
-    if (selectedRow != -1) {
-        // Update the table model with new values
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setValueAt(ID, selectedRow, 0); // Update Employee ID
-        model.setValueAt(name, selectedRow, 1); // Update Employee Name
-        model.setValueAt(password, selectedRow, 2); // Update Password
-
-        // Update in the database
-        Connection con = null;
-        PreparedStatement ps = null;
-
-        try {
-            con = ConnectionProvider.getCon();
-            String sql = "UPDATE employeeaccounts SET employeeID=?, employeeName=?, employeePassword=? WHERE ID=?";
-            ps = con.prepareStatement(sql);
-
-                ps.setString(1, ID);
-                ps.setString(2, name);
-                ps.setString(3, password);
-                ps.setInt(4, employeeIDD);
-            
-
-            // Execute update
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "User Updated Successfully!");
-            } else {
-                JOptionPane.showMessageDialog(null, "User not found or no change in data.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error updating user.", "Error", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    } else {
-        JOptionPane.showMessageDialog(null, "Please select a row to update.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-        
-        Connection con = null;
-        PreparedStatement ps = null;
-            
-            try {
-            con = ConnectionProvider.getCon();
-            String sql = "UPDATE employeeaccounts SET employeeID=?, employeeName=?, employeePassword=? WHERE ID=?";
-            ps = con.prepareStatement(sql);
-
-            ps.setString(0, ID);
-            ps.setString(1, name);
-            ps.setString(2, password);
-
-            // Execute update
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "User Updated Successfully!");
-                setVisible(false);
-                new dentalAdminPanel2().setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "User not found or no change in data.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        
-            
-        }catch (SQLIntegrityConstraintViolationException e){
-            JOptionPane.showMessageDialog(null,"User ID already exist.");
-            employeeName.setText("");
-            employeeID.setText("");
-            employeePassword.setText("");
-            employeeRePassword.setText("");
-        }catch(SQLException e){
-            e.printStackTrace();
-            employeeName.setText("");
-            employeeID.setText("");
-            employeePassword.setText("");
-            employeeRePassword.setText("");
-            
-        }
-        formComponentShown(null);
-    }//GEN-LAST:event_saveBtnActionPerformed
+    }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         
@@ -380,24 +308,60 @@ if (validateFields("new")){
             String employeePasswordValue = jTable1.getValueAt(selectedRow, 2).toString();
 
             // Set the values in the respective text fields
-            employeeID.setText(employeeIDValue);
+            employeeUsername.setText(employeeIDValue);
             employeeName.setText(employeeNameValue);
             employeePassword.setText(employeePasswordValue);
             
-            employeeID.setEnabled(false);
+            employeeUsername.setEnabled(false);
             employeeName.setEnabled(false);
             employeePassword.setEnabled(false);
             employeeRePassword.setEnabled(false);
             
-            editBtn.setEnabled(true);
+            clearBtn.setEnabled(true);
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        employeeID.setEnabled(true);
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+       employeeName.setText("");
+            employeeUsername.setText("");
+            employeePassword.setText("");
+            employeeRePassword.setText("");
+            
+             employeeUsername.setEnabled(true);
             employeeName.setEnabled(true);
             employeePassword.setEnabled(true);
             employeeRePassword.setEnabled(true);
-    }//GEN-LAST:event_editBtnActionPerformed
+    }//GEN-LAST:event_clearBtnActionPerformed
+
+    private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
+        
+         String name = employeeName.getText();
+         String ID = employeeUsername.getText();
+         String password = employeePassword.getText();
+         String repassword = employeeRePassword.getText();
+         
+          try{
+            
+             pst = con.prepareStatement("DELETE FROM employeeaccounts WHERE employeeUserName = ? AND employeeName = ? AND employeePassword = ?");
+            
+                
+                pst.setString(1, ID);
+                pst.setString(2, name);
+                pst.setString(3, password);
+                
+                int rowsDeleted = pst.executeUpdate();
+        
+                if (rowsDeleted > 0) {
+                    JOptionPane.showMessageDialog(null, "Removed Successfully.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No matching record found.");
+                }
+          }
+          catch(SQLException e){
+              e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error occurred while trying to remove the record.");
+          }
+         
+    }//GEN-LAST:event_removeBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -436,17 +400,17 @@ if (validateFields("new")){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
-    private javax.swing.JButton editBtn;
-    private javax.swing.JTextField employeeID;
+    private javax.swing.JButton clearBtn;
     private javax.swing.JTextField employeeName;
     private javax.swing.JPasswordField employeePassword;
     private javax.swing.JPasswordField employeeRePassword;
+    private javax.swing.JTextField employeeUsername;
     private javax.swing.JButton exitBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton logoutBtn;
     private javax.swing.JButton removeBtn;
-    private javax.swing.JButton saveBtn;
     // End of variables declaration//GEN-END:variables
 }
