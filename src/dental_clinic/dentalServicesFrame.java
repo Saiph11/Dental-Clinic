@@ -262,7 +262,7 @@ public static String chosenCategory, chosenServices;
         jPanel1.add(orthodonticsPanel);
         orthodonticsPanel.setBounds(730, 220, 260, 340);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\Homepage.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ana Marie Lim\\Documents\\Dental\\2\\Updated\\Homepage.png")); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 1180, 710);
 
