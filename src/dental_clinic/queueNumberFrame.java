@@ -4,10 +4,17 @@
  */
 package dental_clinic;
 
-/**
- *
- * @author Maggie
- */
+import static dental_clinic.patientInformationFrame.patientInputName;
+import static dental_clinic.patientInformationFrame.priority;
+import java.sql.ResultSet;
+import java.sql.*;
+import dow.ConnectionProvider;
+import java.sql.Statement;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
+
+
+
 public class queueNumberFrame extends javax.swing.JFrame {
 
     /**
@@ -16,6 +23,51 @@ public class queueNumberFrame extends javax.swing.JFrame {
     public queueNumberFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        System.out.println(priority);
+        
+        if(priority.equals("Patient is a priority")){
+            try{
+            Connection con = ConnectionProvider.getCon();
+            Statement st = con.createStatement();
+            ResultSet rsCheck = st.executeQuery("SELECT * FROM prioritypatientrecords WHERE patientName ='" + patientInputName + "'");
+
+             
+            if(rsCheck.next()){
+                jPanel2.setVisible(false);
+                userQueueNum.setText(rsCheck.getString("patient_pk"));
+                System.out.println(rsCheck.getString("patient_pk"));
+            }
+               
+                
+                
+
+                
+        }
+        catch(Exception e){
+            
+        }
+        }else if (priority.equals("Patient is not a priority")){
+            try{
+            Connection con = ConnectionProvider.getCon();
+            Statement st = con.createStatement();
+            ResultSet rsCheck = st.executeQuery("SELECT * FROM patientrecords WHERE patientName ='" + patientInputName + "'");
+
+        
+                
+                if(rsCheck.next()){
+
+                userQueueNum.setText(rsCheck.getString("patient_pk"));
+                System.out.println(rsCheck.getString("patient_pk"));
+            }
+            }
+               
+    
+        catch(Exception e){
+            
+        }
+        }
+        
     }
 
     /**
@@ -30,6 +82,7 @@ public class queueNumberFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         userQueueNum = new javax.swing.JLabel();
         returnBtn = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -47,10 +100,19 @@ public class queueNumberFrame extends javax.swing.JFrame {
         returnBtn.setBorderPainted(false);
         returnBtn.setContentAreaFilled(false);
         returnBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        returnBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(returnBtn);
         returnBtn.setBounds(40, 50, 50, 40);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maggie\\Desktop\\ClearView Images\\queueNumber.png")); // NOI18N
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(440, 60, 100, 80);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\queueNumber (1).png")); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 710, 530);
 
@@ -58,6 +120,11 @@ public class queueNumberFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
+this.setVisible(false);
+
+    }//GEN-LAST:event_returnBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -97,6 +164,7 @@ public class queueNumberFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JButton returnBtn;
     private javax.swing.JLabel userQueueNum;
     // End of variables declaration//GEN-END:variables
