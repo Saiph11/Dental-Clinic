@@ -4,6 +4,9 @@
  */
 package dental_clinic;
 
+
+import static dental_clinic.dentalServicesFrame.chosenCategory;
+import static dental_clinic.dentalServicesFrame.chosenServices;
 import java.sql.*;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -13,19 +16,24 @@ import java.util.logging.Logger;
 
 public class patientInformationFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form patientInformationFrame
-     */
+
+    public static String patientInputName, priority;
+    
+    
+    
     public patientInformationFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
         Connect();
+        
+        System.out.println(chosenCategory);
+        System.out.println(chosenServices);
     }
     
     public void Connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dental", "root", "helios5600");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dental", "root", "paulthegreat118");
             System.out.println("Connected!");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(patientInformationFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -186,7 +194,7 @@ public class patientInformationFrame extends javax.swing.JFrame {
         jPanel1.add(returnBtn);
         returnBtn.setBounds(60, 630, 60, 50);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maggie\\Desktop\\ClearView Images\\infoFrame.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\Homepage (1).png")); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 1170, 710);
 
@@ -222,9 +230,9 @@ public class patientInformationFrame extends javax.swing.JFrame {
         buttonGroup2.add(naBtn);
 
         // Set action commands for priority buttons
-        pregnantBtn.setActionCommand("Pregnant");
-        seniorBtn.setActionCommand("Senior");
-        pwdBtn.setActionCommand("PWD");
+        pregnantBtn.setActionCommand("Pregnant Woman");
+        seniorBtn.setActionCommand("Senior Citizen");
+        pwdBtn.setActionCommand("Person with Disability");
         naBtn.setActionCommand("N/A");
 
         // Retrieve selected gender and priority
@@ -236,8 +244,9 @@ public class patientInformationFrame extends javax.swing.JFrame {
         System.out.println("Selected Priority: " + selectedPriority);
        
             
-        try{
-           pst = con.prepareStatement("INSERT INTO patientrecords (patientName,patientDOB,patientContact,patientEmergency,patientAddress,patientAllergies,patientGender,patientPriority) VALUES (?,?,?,?,?,?,?,?)");
+        if(seniorBtn.isSelected()|| pwdBtn.isSelected()||pregnantBtn.isSelected()){
+            try{
+           pst = con.prepareStatement("INSERT INTO prioritypatientrecords (patientName,patientDOB,patientContact,patientEmergency,patientAddress,patientAllergies,patientGender,patientPriority,patientCategory,patientServices) VALUES (?,?,?,?,?,?,?,?,?,?)");
            
            pst.setString(1, name);
            pst.setString(2, bday);
@@ -247,13 +256,63 @@ public class patientInformationFrame extends javax.swing.JFrame {
            pst.setString(6, allergies);
            pst.setString(7, selectedGender);
            pst.setString(8, selectedPriority);
+           pst.setString(9, chosenCategory);
+           pst.setString(10, chosenServices);
            pst.executeUpdate();
            
-           JOptionPane.showMessageDialog(null,"Info saved! :)");
+           JOptionPane.showMessageDialog(null,"Priority info saved! :)");
+           
+           
+           patientInputName = patientName.getText();
+           priority = "Patient is a priority";
+           
+           
+           
+           this.setVisible(false);
+           new viewQueue().setVisible(true);
+           new queueNumberFrame().setVisible(true);
+           
+           
      
            
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "SQL Error: " + e.getMessage());
+        }
+        }else {
+            try{
+           pst = con.prepareStatement("INSERT INTO patientrecords (patientName,patientDOB,patientContact,patientEmergency,patientAddress,patientAllergies,patientGender,patientPriority,patientCategory,patientServices) VALUES (?,?,?,?,?,?,?,?,?,?)");
+           
+           pst.setString(1, name);
+           pst.setString(2, bday);
+           pst.setString(3, contact);
+           pst.setString(4, emergency);
+           pst.setString(5, address);
+           pst.setString(6, allergies);
+           pst.setString(7, selectedGender);
+           pst.setString(8, selectedPriority);
+           pst.setString(9, chosenCategory);
+           pst.setString(10, chosenServices);
+           pst.executeUpdate();
+           
+           JOptionPane.showMessageDialog(null,"Info saved! :)");
+           
+           
+           patientInputName = patientName.getText();
+           priority = "Patient is not a priority";
+           
+           
+           
+           this.setVisible(false);
+           new viewQueue().setVisible(true);
+           new queueNumberFrame().setVisible(true);
+           
+        
+           
+     
+           
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "SQL Error: " + e.getMessage());
+        }
         }
        
     }//GEN-LAST:event_nextBtnActionPerformed
