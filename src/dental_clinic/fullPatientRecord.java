@@ -138,6 +138,11 @@ public class fullPatientRecord extends javax.swing.JFrame {
         editButton.setBounds(946, 65, 135, 42);
 
         backButton.setContentAreaFilled(false);
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(backButton);
         backButton.setBounds(70, 643, 40, 30);
 
@@ -187,12 +192,12 @@ public class fullPatientRecord extends javax.swing.JFrame {
         jPanel1.add(addressField);
         addressField.setBounds(690, 472, 380, 30);
 
-        background.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ana Marie Lim\\Documents\\Dental\\2\\Updated\\Update Full Patient Record.png")); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\Homepage (3).png")); // NOI18N
         background.setText("asd");
         background.setMaximumSize(new java.awt.Dimension(1170, 710));
         background.setMinimumSize(new java.awt.Dimension(1170, 710));
         jPanel1.add(background);
-        background.setBounds(0, 0, 1170, 708);
+        background.setBounds(0, 0, 1170, 710);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 710));
 
@@ -221,6 +226,10 @@ public class fullPatientRecord extends javax.swing.JFrame {
     private void fnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fnameActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments

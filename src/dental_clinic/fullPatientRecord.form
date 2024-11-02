@@ -93,6 +93,9 @@
           <Properties>
             <Property name="contentAreaFilled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backButtonActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="70" y="643" width="40" height="30"/>
@@ -200,7 +203,7 @@
         <Component class="javax.swing.JLabel" name="background">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Ana Marie Lim\Documents\Dental\2\Updated\Update Full Patient Record.png"/>
+              <Image iconType="2" name="C:\Users\Paul Laurence Reyes\Documents\NU\2nd Year\DATA STRUCTURES AND ALGORITHMS\Dental_UI\Homepage (3).png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="asd"/>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -212,7 +215,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="0" width="1170" height="-1"/>
+              <AbsoluteConstraints x="0" y="0" width="1170" height="710"/>
             </Constraint>
           </Constraints>
         </Component>
