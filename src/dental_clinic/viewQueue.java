@@ -10,15 +10,22 @@ package dental_clinic;
  * @author Ana Marie Lim
  */
 
+import dow.ConnectionProvider;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 public class viewQueue extends javax.swing.JFrame {
 
     /** Creates new form fullPatientRecord */
     public viewQueue() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
 
     }
+    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -35,15 +42,21 @@ public class viewQueue extends javax.swing.JFrame {
         priorityQueueNumber = new javax.swing.JLabel();
         normalqueueNumber = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        normalQueue = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
         priorityQueue = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        normalQueue = new javax.swing.JTable();
         editButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1170, 710));
+        setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
@@ -77,37 +90,6 @@ public class viewQueue extends javax.swing.JFrame {
         jPanel1.add(normalqueueNumber);
         normalqueueNumber.setBounds(820, 210, 110, 80);
 
-        normalQueue.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Patient Name", "Queue Number", "Category", "Service Availed"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        normalQueue.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(normalQueue);
-        if (normalQueue.getColumnModel().getColumnCount() > 0) {
-            normalQueue.getColumnModel().getColumn(0).setResizable(false);
-            normalQueue.getColumnModel().getColumn(1).setResizable(false);
-            normalQueue.getColumnModel().getColumn(2).setResizable(false);
-            normalQueue.getColumnModel().getColumn(3).setResizable(false);
-        }
-
-        jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(70, 380, 550, 200);
-
         priorityQueue.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -128,12 +110,43 @@ public class viewQueue extends javax.swing.JFrame {
             }
         });
         priorityQueue.getTableHeader().setReorderingAllowed(false);
-        jScrollPane3.setViewportView(priorityQueue);
+        jScrollPane1.setViewportView(priorityQueue);
         if (priorityQueue.getColumnModel().getColumnCount() > 0) {
             priorityQueue.getColumnModel().getColumn(0).setResizable(false);
             priorityQueue.getColumnModel().getColumn(1).setResizable(false);
             priorityQueue.getColumnModel().getColumn(2).setResizable(false);
             priorityQueue.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(70, 380, 550, 200);
+
+        normalQueue.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Patient Name", "Queue Number", "Category", "Service Availed"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        normalQueue.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(normalQueue);
+        if (normalQueue.getColumnModel().getColumnCount() > 0) {
+            normalQueue.getColumnModel().getColumn(0).setResizable(false);
+            normalQueue.getColumnModel().getColumn(1).setResizable(false);
+            normalQueue.getColumnModel().getColumn(2).setResizable(false);
+            normalQueue.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jPanel1.add(jScrollPane3);
@@ -155,7 +168,7 @@ public class viewQueue extends javax.swing.JFrame {
         jPanel1.add(backButton);
         backButton.setBounds(70, 633, 40, 30);
 
-        background.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ana Marie Lim\\Documents\\Dental\\2\\Updated\\View Queue.png")); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\View Queue.png")); // NOI18N
         background.setText("asd");
         background.setMaximumSize(new java.awt.Dimension(1170, 710));
         background.setMinimumSize(new java.awt.Dimension(1170, 710));
@@ -173,6 +186,73 @@ public class viewQueue extends javax.swing.JFrame {
         editQueue edit = new editQueue();
         edit.setVisible(true);
     }//GEN-LAST:event_editButtonActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+    try{
+            Connection con = ConnectionProvider.getCon();
+            Statement st = con.createStatement();
+            
+            
+            ResultSet rs = st.executeQuery("SELECT *FROM patientrecords");
+
+
+            DefaultTableModel model = (DefaultTableModel)normalQueue.getModel();
+            model.setRowCount(0);
+
+            while(rs.next()){
+                model.addRow(new Object[]{rs.getString("patientName"),rs.getString("patient_pk"),rs.getString("patientCategory"), rs.getString("patientServices")});
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    try{
+            Connection con = ConnectionProvider.getCon();
+            Statement st = con.createStatement();
+
+            ResultSet rs = st.executeQuery("SELECT *FROM prioritypatientrecords");
+
+
+            DefaultTableModel model = (DefaultTableModel)priorityQueue.getModel();
+            model.setRowCount(0);
+
+            while(rs.next()){
+                model.addRow(new Object[]{rs.getString("patientName"),rs.getString("patient_pk"),rs.getString("patientCategory"), rs.getString("patientServices")});
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    
+    
+    
+    
+    
+    
+    if(priorityQueue.getRowCount() > 0){
+    int patientNumberColumn = 1;
+    Object patientQueueNum = priorityQueue.getValueAt(0, patientNumberColumn);
+    
+    String patientQueueNumString = patientQueueNum.toString();
+    priorityQueueNumber.setText(patientQueueNumString);  
+    
+    }else{
+        System.out.println("Table is empty :<");
+    }
+    
+    
+    if(normalQueue.getRowCount() > 0){
+    int patientNumberColumn2 = 1;
+    Object patientQueueNum2 = normalQueue.getValueAt(0, patientNumberColumn2);
+    
+    String patientQueueNumString2 = patientQueueNum2.toString();
+    normalqueueNumber.setText(patientQueueNumString2);    
+    
+    }else{
+        System.out.println("Table is empty :<");
+    }
+    
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
