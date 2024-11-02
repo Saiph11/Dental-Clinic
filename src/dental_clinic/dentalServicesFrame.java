@@ -19,9 +19,7 @@ import java.awt.event.ActionEvent;
  */
 public class dentalServicesFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form dentalServicesFrame
-     */
+public static String chosenCategory, chosenServices;
     public dentalServicesFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -306,9 +304,9 @@ public class dentalServicesFrame extends javax.swing.JFrame {
 
             // Insert data if any checkboxes are selected
             if (serviceCategoryValues.length() > 0) {
-                String query = "INSERT INTO dental_services (ServiceCategory,ServiceType) VALUES ('" + gen + "', '" + serviceCategoryValues.toString() + "')";
-                st.executeUpdate(query);
-                JOptionPane.showMessageDialog(null, "Data inserted successfully!");
+                chosenCategory = gen;
+                chosenServices = serviceCategoryValues.toString();
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Please select at least one service.");
             }
@@ -345,9 +343,8 @@ public class dentalServicesFrame extends javax.swing.JFrame {
 
             // Insert data if any checkboxes are selected
             if (serviceCategoryValues.length() > 0) {
-                String query = "INSERT INTO dental_services (ServiceCategory,ServiceType) VALUES ('" + cos + "', '" + serviceCategoryValues.toString() + "')";
-                st.executeUpdate(query);
-                JOptionPane.showMessageDialog(null, "Data inserted successfully!");
+                chosenCategory = cos;
+                chosenServices = serviceCategoryValues.toString();
             } else {
                 JOptionPane.showMessageDialog(null, "Please select at least one service.");
             }
@@ -382,9 +379,8 @@ public class dentalServicesFrame extends javax.swing.JFrame {
 
             // Insert data if any checkboxes are selected
             if (serviceCategoryValues.length() > 0) {
-                String query = "INSERT INTO dental_services (ServiceCategory,ServiceType) VALUES ('" + ortho + "', '" + serviceCategoryValues.toString() + "')";
-                st.executeUpdate(query);
-                JOptionPane.showMessageDialog(null, "Data inserted successfully!");
+                chosenCategory = ortho;
+                chosenServices = serviceCategoryValues.toString();
             } else {
                 JOptionPane.showMessageDialog(null, "Please select at least one service.");
             }
@@ -423,9 +419,8 @@ public class dentalServicesFrame extends javax.swing.JFrame {
 
             // Insert data if any checkboxes are selected
             if (serviceCategoryValues.length() > 0) {
-                String query = "INSERT INTO dental_services (ServiceCategory,ServiceType) VALUES ('" + oral + "', '" + serviceCategoryValues.toString() + "')";
-                st.executeUpdate(query);
-                JOptionPane.showMessageDialog(null, "Data inserted successfully!");
+                chosenCategory = oral;
+                chosenServices = serviceCategoryValues.toString();
             } else {
                 JOptionPane.showMessageDialog(null, "Please select at least one service.");
             }
@@ -439,7 +434,7 @@ public class dentalServicesFrame extends javax.swing.JFrame {
     else {
         JOptionPane.showMessageDialog(null, "Please select a category.");
     }
-        
+        this.setVisible(false);
         new patientInformationFrame().setVisible(true);
 
         
@@ -470,14 +465,9 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         cosmeticCheckBox3.setSelected(false);
         cosmeticCheckBox4.setSelected(false);
         
-        orthodonticsCheckBox1.setSelected(false);
-        orthodonticsCheckBox2.setSelected(false);
-        orthodonticsCheckBox3.setSelected(false);
         
-        oralCheckBox1.setSelected(false);
-        oralCheckBox2.setSelected(false);
-        oralCheckBox3.setSelected(false);
-        oralCheckBox4.setSelected(false);
+        buttonGroup1.clearSelection();
+        buttonGroup2.clearSelection();
     }//GEN-LAST:event_generalBtnActionPerformed
 
     private void orthodonticsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orthodonticsBtnActionPerformed
@@ -496,14 +486,8 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         cosmeticCheckBox3.setSelected(false);
         cosmeticCheckBox4.setSelected(false);
         
-        orthodonticsCheckBox1.setSelected(false);
-        orthodonticsCheckBox2.setSelected(false);
-        orthodonticsCheckBox3.setSelected(false);
-        
-        oralCheckBox1.setSelected(false);
-        oralCheckBox2.setSelected(false);
-        oralCheckBox3.setSelected(false);
-        oralCheckBox4.setSelected(false);
+        buttonGroup1.clearSelection();
+        buttonGroup2.clearSelection();
     }//GEN-LAST:event_orthodonticsBtnActionPerformed
 
     private void cosmeticBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cosmeticBtnActionPerformed
@@ -522,14 +506,8 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         cosmeticCheckBox3.setSelected(false);
         cosmeticCheckBox4.setSelected(false);
         
-        orthodonticsCheckBox1.setSelected(false);
-        orthodonticsCheckBox2.setSelected(false);
-        orthodonticsCheckBox3.setSelected(false);
-        
-        oralCheckBox1.setSelected(false);
-        oralCheckBox2.setSelected(false);
-        oralCheckBox3.setSelected(false);
-        oralCheckBox4.setSelected(false);
+        buttonGroup1.clearSelection();
+        buttonGroup2.clearSelection();
     }//GEN-LAST:event_cosmeticBtnActionPerformed
 
     private void oralBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oralBtnActionPerformed
@@ -548,14 +526,8 @@ public class dentalServicesFrame extends javax.swing.JFrame {
         cosmeticCheckBox3.setSelected(false);
         cosmeticCheckBox4.setSelected(false);
         
-        orthodonticsCheckBox1.setSelected(false);
-        orthodonticsCheckBox2.setSelected(false);
-        orthodonticsCheckBox3.setSelected(false);
-        
-        oralCheckBox1.setSelected(false);
-        oralCheckBox2.setSelected(false);
-        oralCheckBox3.setSelected(false);
-        oralCheckBox4.setSelected(false);
+        buttonGroup1.clearSelection();
+        buttonGroup2.clearSelection();
     }//GEN-LAST:event_oralBtnActionPerformed
 
     private void oralCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oralCheckBox3ActionPerformed
