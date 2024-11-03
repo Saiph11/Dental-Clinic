@@ -100,7 +100,7 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
             }
         });
         jPanel1.add(removeBtn);
-        removeBtn.setBounds(790, 610, 120, 40);
+        removeBtn.setBounds(800, 610, 120, 40);
 
         clearBtn.setBorderPainted(false);
         clearBtn.setContentAreaFilled(false);
