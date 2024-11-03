@@ -74,10 +74,15 @@ public class employeeLoginFrame extends javax.swing.JFrame {
         returnBtn.setBorderPainted(false);
         returnBtn.setContentAreaFilled(false);
         returnBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        returnBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(returnBtn);
         returnBtn.setBounds(40, 50, 70, 50);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maggie\\Desktop\\ClearView Images\\employeeLogin.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\infoFrame.png")); // NOI18N
         jLabel1.setText("jLabel1");
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 1170, 710);
@@ -113,8 +118,8 @@ public class employeeLoginFrame extends javax.swing.JFrame {
     
             while(rs.next()){
               temp = 1;
-              setVisible(false);
-              new KahitAno().setVisible(true);
+              this.setVisible(false);
+              new dentalHomePage().setVisible(true);
           }
           if(Password.isEmpty()&&ID.isEmpty()){
               JOptionPane.showMessageDialog(null,"Please Enter Username and Password");
@@ -139,6 +144,14 @@ public class employeeLoginFrame extends javax.swing.JFrame {
 }
         
     }//GEN-LAST:event_loginBtnActionPerformed
+
+    private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
+        int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", null, JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION){
+            this.setVisible(false);
+            new dentalLoginFrame().setVisible(true);
+        }
+    }//GEN-LAST:event_returnBtnActionPerformed
 
     /**
      * @param args the command line arguments
