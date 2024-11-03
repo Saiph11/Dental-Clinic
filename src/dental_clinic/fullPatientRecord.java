@@ -192,10 +192,15 @@ public class fullPatientRecord extends javax.swing.JFrame {
         jPanel1.add(addressField);
         addressField.setBounds(690, 472, 380, 30);
 
-        background.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\Homepage (3).png")); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dental_clinic/Update Patient Record.png"))); // NOI18N
         background.setText("asd");
         background.setMaximumSize(new java.awt.Dimension(1170, 710));
         background.setMinimumSize(new java.awt.Dimension(1170, 710));
+        background.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                backgroundComponentShown(evt);
+            }
+        });
         jPanel1.add(background);
         background.setBounds(0, 0, 1170, 710);
 
@@ -230,6 +235,9 @@ public class fullPatientRecord extends javax.swing.JFrame {
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void backgroundComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_backgroundComponentShown
+           }//GEN-LAST:event_backgroundComponentShown
 
     /**
      * @param args the command line arguments
