@@ -14,7 +14,7 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
   public void Connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dental", "root", "padabaKO21");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dental", "root", "paulthegreat118");
             System.out.println("Connected!");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(patientInformationFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,7 +63,6 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
         addBtn = new javax.swing.JButton();
         employeeUsername = new javax.swing.JTextField();
         employeeName = new javax.swing.JTextField();
-        exitBtn = new javax.swing.JButton();
         employeeRePassword = new javax.swing.JPasswordField();
         employeePassword = new javax.swing.JPasswordField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -135,17 +134,6 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
         jPanel1.add(employeeName);
         employeeName.setBounds(840, 160, 250, 30);
 
-        exitBtn.setBorderPainted(false);
-        exitBtn.setContentAreaFilled(false);
-        exitBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        exitBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitBtnActionPerformed(evt);
-            }
-        });
-        jPanel1.add(exitBtn);
-        exitBtn.setBounds(1060, 40, 50, 60);
-
         employeeRePassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         employeeRePassword.setBorder(null);
         jPanel1.add(employeeRePassword);
@@ -184,7 +172,7 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
         jPanel1.add(jScrollPane1);
         jScrollPane1.setBounds(70, 190, 630, 450);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Windows10\\Downloads\\new dede.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\new update.png")); // NOI18N
         jLabel1.setText("jLabel1");
         jLabel1.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -198,15 +186,6 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
-        int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", null, JOptionPane.YES_NO_OPTION);
-        if (choice == JOptionPane.YES_OPTION){
-            this.setVisible(false);
-            new employeeLoginFrame().setVisible(true);
-        }
-        
-    }//GEN-LAST:event_exitBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
     if (validateFields("new")){
@@ -223,8 +202,8 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
       
         try{
             
-            pst = con.prepareStatement("INSERT INTO employeeaccounts (employeeUserName, employeeName, employeePassword) VALUES (?,?,?)");
-            
+            pst = con.prepareStatement("INSERT INTO employeeaccounts (EmployeeUserName, EmployeeName, EmployeePassword) VALUES (?,?,?)");
+                
                 
                 pst.setString(1, ID);
                 pst.setString(2, name);
@@ -277,23 +256,23 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
             model.setRowCount(0);
             
             while(rs.next()){
-                model.addRow(new Object[]{rs.getString("employeeID"),rs.getString("employeeUserName"),rs.getString("employeeName"),rs.getString("employeePassword")});
+                model.addRow(new Object[]{rs.getString("EmployeePK"),rs.getString("EmployeeUserName"),rs.getString("EmployeeName"),rs.getString("EmployeePassword")});
             }
             
         }catch(Exception e){
             e.printStackTrace();
         }
-        clearBtn.setEnabled(false);
-        
+        clearBtn.setEnabled(true);
+
         
     }//GEN-LAST:event_formComponentShown
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
-      int choice =  JOptionPane.showConfirmDialog(null,"Are you sure you want to log out?",null,JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", null, JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION){
-        setVisible(false);
-        new employeeLoginFrame().setVisible(true);
-        }
+            this.setVisible(false);
+            new employeeLoginFrame().setVisible(true);
+        }      
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -323,15 +302,17 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
-       employeeName.setText("");
+            employeeName.setText("");
             employeeUsername.setText("");
             employeePassword.setText("");
             employeeRePassword.setText("");
             
-             employeeUsername.setEnabled(true);
+            employeeUsername.setEnabled(true);
             employeeName.setEnabled(true);
             employeePassword.setEnabled(true);
             employeeRePassword.setEnabled(true);
+            
+            jTable1.clearSelection();
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
@@ -353,10 +334,10 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
         
         if (rs.next()) {
             // Retrieve the employeeID from the ResultSet
-            int employeeID = rs.getInt("employeeID"); // This retrieves the employeeID correctly
+            int employeeID = rs.getInt("EmployeePK"); // This retrieves the employeeID correctly
 
             // Prepare the DELETE query to remove the row using employeeID
-            pst = con.prepareStatement("DELETE FROM employeeaccounts WHERE employeeID = ?");
+            pst = con.prepareStatement("DELETE FROM employeeaccounts WHERE EmployeePK = ?");
             
             // Set the employeeID parameter for the DELETE query
             pst.setInt(1, employeeID);
@@ -489,7 +470,6 @@ public class dentalAdminPanel2 extends javax.swing.JFrame {
     private javax.swing.JPasswordField employeePassword;
     private javax.swing.JPasswordField employeeRePassword;
     private javax.swing.JTextField employeeUsername;
-    private javax.swing.JButton exitBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
