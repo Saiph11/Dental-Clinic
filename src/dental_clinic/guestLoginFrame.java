@@ -37,8 +37,8 @@ public class guestLoginFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         loginBtn = new javax.swing.JButton();
-        signTxt = new javax.swing.JLabel();
         returnBtn = new javax.swing.JButton();
+        signTxt = new javax.swing.JLabel();
         guestPassword = new javax.swing.JPasswordField();
         guestUsername = new javax.swing.JTextField();
         signupBtn = new javax.swing.JButton();
@@ -61,16 +61,21 @@ public class guestLoginFrame extends javax.swing.JFrame {
         jPanel1.add(loginBtn);
         loginBtn.setBounds(780, 510, 170, 50);
 
+        returnBtn.setBorderPainted(false);
+        returnBtn.setContentAreaFilled(false);
+        returnBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        returnBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(returnBtn);
+        returnBtn.setBounds(40, 50, 70, 50);
+
         signTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         signTxt.setText("Don't have an account?");
         jPanel1.add(signTxt);
         signTxt.setBounds(720, 600, 200, 30);
-
-        returnBtn.setBorderPainted(false);
-        returnBtn.setContentAreaFilled(false);
-        returnBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(returnBtn);
-        returnBtn.setBounds(40, 50, 70, 50);
 
         guestPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         guestPassword.setBorder(null);
@@ -79,7 +84,6 @@ public class guestLoginFrame extends javax.swing.JFrame {
 
         guestUsername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         guestUsername.setBorder(null);
-        guestUsername.setOpaque(false);
         guestUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 guestUsernameActionPerformed(evt);
@@ -101,12 +105,17 @@ public class guestLoginFrame extends javax.swing.JFrame {
                 signupBtnMouseExited(evt);
             }
         });
+        signupBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signupBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(signupBtn);
         signupBtn.setBounds(890, 600, 140, 30);
 
-        guestLoginBG.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maggie\\Desktop\\ClearView Images\\guestLogin.png")); // NOI18N
+        guestLoginBG.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\infoFrame (3).png")); // NOI18N
         jPanel1.add(guestLoginBG);
-        guestLoginBG.setBounds(0, 0, 1172, 710);
+        guestLoginBG.setBounds(0, 0, 1170, 710);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 708));
 
