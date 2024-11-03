@@ -31,7 +31,8 @@ public class editQueue extends javax.swing.JFrame {
     Statement st;
     Connection con;
     PreparedStatement pst;
-
+    int number;
+    
       public void Connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -130,6 +131,11 @@ public class editQueue extends javax.swing.JFrame {
             }
         });
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setResizable(false);
@@ -221,8 +227,20 @@ public class editQueue extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-
-
+        
+        try{
+        pst = con.prepareStatement("DELETE FROM patientrecords WHERE patient_pk=?");
+        pst.setInt(1,number);
+        pst.executeUpdate();
+        JOptionPane.showMessageDialog(null,"Removed Successfully!");
+        this.setVisible(false);
+        new editQueue().setVisible(true);
+        
+        }
+        catch(SQLException e){
+             e.printStackTrace();
+             JOptionPane.showMessageDialog(null,"ERROR");
+        }
     }//GEN-LAST:event_removeButtonActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
@@ -234,7 +252,7 @@ public class editQueue extends javax.swing.JFrame {
             model.setRowCount(0);
 
             while(rs.next()){
-                model.addRow(new Object[]{rs.getInt("patient_pk"), rs.getString("patientName"),rs.getString("patientBod"),rs.getString("patientContact"), rs.getString("patientServices")});
+                model.addRow(new Object[]{rs.getInt("patient_pk"), rs.getString("patientName"),rs.getString("patientDOB"),rs.getString("patientContact"), rs.getString("patientServices")});
             }
           }
         catch(SQLException e){
@@ -242,6 +260,14 @@ public class editQueue extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_formComponentShown
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+       int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+            // Retrieve data from the selected row
+           number = (Integer) jTable1.getValueAt(selectedRow, 0);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
