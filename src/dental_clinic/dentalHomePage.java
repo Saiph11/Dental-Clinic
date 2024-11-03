@@ -5,6 +5,7 @@
 package dental_clinic;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,6 +48,11 @@ public class dentalHomePage extends javax.swing.JFrame {
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1);
         jButton1.setBounds(1060, 40, 70, 50);
 
@@ -84,6 +90,11 @@ public class dentalHomePage extends javax.swing.JFrame {
                 recordsBtnMouseExited(evt);
             }
         });
+        recordsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                recordsBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(recordsBtn);
         recordsBtn.setBounds(580, 0, 170, 130);
 
@@ -98,6 +109,11 @@ public class dentalHomePage extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 QueueBtnMouseExited(evt);
+            }
+        });
+        QueueBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                QueueBtnActionPerformed(evt);
             }
         });
         jPanel1.add(QueueBtn);
@@ -116,10 +132,15 @@ public class dentalHomePage extends javax.swing.JFrame {
                 editQueueBtnMouseExited(evt);
             }
         });
+        editQueueBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editQueueBtnActionPerformed(evt);
+            }
+        });
         jPanel1.add(editQueueBtn);
         editQueueBtn.setBounds(860, 0, 170, 130);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Maggie\\Desktop\\ClearView Images\\Homepage.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Paul Laurence Reyes\\Documents\\NU\\2nd Year\\DATA STRUCTURES AND ALGORITHMS\\Dental_UI\\Homepage (2).png")); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 1170, 710);
 
@@ -163,6 +184,29 @@ public class dentalHomePage extends javax.swing.JFrame {
     private void editQueueBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editQueueBtnMouseExited
         editQueueBtn.setForeground(Color.decode("#000000"));
     }//GEN-LAST:event_editQueueBtnMouseExited
+
+    private void QueueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QueueBtnActionPerformed
+        this.setVisible(false);
+        new viewQueue().setVisible(true);
+    }//GEN-LAST:event_QueueBtnActionPerformed
+
+    private void editQueueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editQueueBtnActionPerformed
+        this.setVisible(false);
+        new editQueue().setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_editQueueBtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", null, JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION){
+            this.setVisible(false);
+            new dentalLoginFrame().setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void recordsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recordsBtnActionPerformed
+        this.setVisible(false);
+        new patientRecordTable().setVisible(true);         // TODO add your handling code here:
+    }//GEN-LAST:event_recordsBtnActionPerformed
 
     /**
      * @param args the command line arguments
