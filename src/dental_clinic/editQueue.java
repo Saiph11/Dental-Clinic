@@ -49,11 +49,21 @@ public class editQueue extends javax.swing.JFrame {
 
         editButton.setContentAreaFilled(false);
         editButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(editButton);
         editButton.setBounds(560, 73, 150, 50);
 
         addButton.setContentAreaFilled(false);
         addButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(addButton);
         addButton.setBounds(750, 70, 160, 50);
 
@@ -121,6 +131,14 @@ public class editQueue extends javax.swing.JFrame {
         viewQueue view = new viewQueue();
         view.setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        
+    }//GEN-LAST:event_editButtonActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addButtonActionPerformed
 
     /**
      * @param args the command line arguments
